@@ -1,16 +1,21 @@
 package models;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
+
+import com.db4o.query.Query;
+
+import modelo.Aluguel;
 
 public class Reuniao {
 	private int id;
 	private String data;
-	private ArrayList<Pessoa> listaDePessoas = new ArrayList<>();
+	private List<Pessoa> listaDePessoas = new ArrayList<>();
 	
 	public Reuniao(String dataDaReuniao) {
 		data = dataDaReuniao;
 	}
+	
 	
 	public void adicionarPessoa(Pessoa pessoa) {
 		listaDePessoas.add(pessoa);
@@ -36,7 +41,7 @@ public class Reuniao {
 		this.data = data;
 	}
 
-	public ArrayList<Pessoa> getListaDePessoas() {
+	public List<Pessoa> getListaDePessoas() {
 		return listaDePessoas;
 	}
 
@@ -51,5 +56,5 @@ public class Reuniao {
 
 	
 	
-
+	
 }
