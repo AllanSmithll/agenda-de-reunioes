@@ -1,6 +1,3 @@
-
-
-
 package appconsole;
 
 import java.util.List;
@@ -11,10 +8,7 @@ import com.db4o.Db4oEmbedded;
 import com.db4o.ObjectContainer;
 import com.db4o.config.EmbeddedConfiguration;
 
-import models.Aluguel;
-import models.Reuniao;
-
-
+import models.*;
 
 public class Util {
 	private static ObjectContainer manager;
@@ -65,8 +59,6 @@ public class Util {
 			return reuniao.getId() + 1;
 		}
 		else
-			return 1; 	//nenhum objeto reuniao encontrado
+			return 1; 
 	}
-	
-
 }

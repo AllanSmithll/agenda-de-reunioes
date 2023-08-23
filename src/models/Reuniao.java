@@ -1,11 +1,13 @@
+/*
+ * Reuniao class
+ * @authors Allan Amancio e Marcio Jose
+ */
 package models;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.db4o.query.Query;
-
-import modelo.Aluguel;
 
 public class Reuniao {
 	private int id;
