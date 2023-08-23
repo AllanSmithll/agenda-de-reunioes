@@ -61,11 +61,11 @@ public class Util {
 		List<Reuniao> resultados = q.execute();
 
 		if(resultados.size()>0) {
-			Aluguel aluguel = resultados.get(0);    //max
-			return aluguel.getId() + 1;
+			Reuniao reuniao = resultados.get(0);    //max
+			return reuniao.getId() + 1;
 		}
 		else
-			return 1; 	//nenhum objeto aluguel encontrado
+			return 1; 	//nenhum objeto reuniao encontrado
 	}
 	
 
