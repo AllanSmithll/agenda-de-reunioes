@@ -4,11 +4,12 @@
  */
 package models;
 
+import java.util.List;
 import java.util.ArrayList;
 
 public class Pessoa {
     private String nome;
-    private ArrayList <Reuniao> reunioes;
+    private List<Reuniao> reunioes = new ArrayList<>();
     
     public Pessoa(String nome) {
         this.nome = nome;
@@ -16,19 +17,25 @@ public class Pessoa {
 
 	public String getNome() { return this.nome;}
 	public void setNome(String nome) { this.nome = nome; }
-	public ArrayList<Reuniao> getReunioes() { return this.reunioes; }
-	public void setReunioes(ArrayList<Reuniao> reunioes) { this.reunioes = reunioes; }
+	public List<Reuniao> getReunioes() { return this.reunioes; }
+	public void setReunioes(List<Reuniao> reunioes) { this.reunioes = reunioes; }
+	
+	public void adicionarReuniao(Reuniao r) { this.reunioes.add(r);	}
+	
+	public void removerReuniao(Reuniao r) {	this.reunioes.remove(r); }
+	
+	public int numeroReunioes() { return this.reunioes.size(); }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Pessoa [nome=").append(nome).append(", reunioes=");
         if (reunioes.isEmpty()) {
-            sb.append("Nenhuma reunião");
+            sb.append("Nenhuma reuniao participada");
         } else {
             sb.append("\n");
-            for (Reuniao reuniao : reunioes) {
-                sb.append("  - ").append(reuniao.toString()).append("\n");
+            for (Reuniao r : reunioes) {
+                sb.append("  - ").append(r.toString()).append("\n");
             }
         }
         sb.append("]");

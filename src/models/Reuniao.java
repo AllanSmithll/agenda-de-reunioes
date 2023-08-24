@@ -7,8 +7,6 @@ package models;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.db4o.query.Query;
-
 public class Reuniao {
 	private int id;
 	private String data;
@@ -17,46 +15,41 @@ public class Reuniao {
 	public Reuniao(String dataDaReuniao) {
 		data = dataDaReuniao;
 	}
-	
+
+	public int getId() { return id;	}
+	public void setId(int id) {	this.id = id; }
+	public String getData() {return data; }
+	public void setData(String data) { this.data = data; }
+	public List<Pessoa> getListaDePessoas() { return listaDePessoas; }
 	
 	public void adicionarPessoa(Pessoa pessoa) {
-		listaDePessoas.add(pessoa);
+		this.listaDePessoas.add(pessoa);
+		pessoa.adicionarReuniao(this);
 	}
 	
 	public void removerPessoa(Pessoa pessoa) {
-		listaDePessoas.remove(pessoa);
+		this.listaDePessoas.remove(pessoa);
+		pessoa.removerReuniao(this);
 	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getData() {
-		return data;
-	}
-
-	public void setData(String data) {
-		this.data = data;
-	}
-
-	public List<Pessoa> getListaDePessoas() {
-		return listaDePessoas;
+	
+	public int numeroPessoasDaReuniao() {
+		return this.listaDePessoas.size();
 	}
 
 	@Override
 	public String toString() {
-		String pessoasNaReuniao = "";
-		for(Pessoa a : listaDePessoas) {
-			pessoasNaReuniao += a.getNome() + ",";
-		}
-		return "Reuniao: id=" + id + ", data=" + data + "Membros: " + pessoasNaReuniao;
-	}
-
-	
-	
-	
+		StringBuilder sb = new StringBuilder();
+        sb.append("Reuniao [id=").append(id).append(", data=").append(data)
+        .append(", pessoas=");
+        if(listaDePessoas.isEmpty()) {
+            sb.append("Nenhuma pessoa agendada");
+        } else {
+            sb.append("\n");
+            for (Pessoa p : listaDePessoas) {
+                sb.append("  - ").append(p.getNome()).append("\n");
+            }
+        }
+        sb.append("]");
+        return sb.toString();	
+    }	
 }
