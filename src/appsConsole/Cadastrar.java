@@ -1,6 +1,10 @@
 package appsConsole;
 
+import java.util.List;
+
 import com.db4o.ObjectContainer;
+import com.db4o.query.Query;
+
 
 import models.Pessoa;
 import models.Reuniao;
@@ -11,31 +15,36 @@ public class Cadastrar {
 	public Cadastrar() {
 		try {
 			manager = Util.conectarBanco();
+		    Pessoa p1 = new Pessoa("Allan");
+		    manager.store(p1);
+		    manager.commit();
+	        Pessoa p2 = new Pessoa("Marcio");
+	        manager.store(p2);
+	        manager.commit();
+	        Pessoa p3 = new Pessoa("Claudio");
+	        manager.store(p3);
+	        manager.commit();
+	        Pessoa p4 = new Pessoa("Wagner");
+	        manager.store(p4);
+	        manager.commit();
+	    
+	        
+	        Reuniao r1 = new Reuniao("10/10/2023");
+	        r1.adicionarPessoa(p1);
+	        r1.adicionarPessoa(p2);
+	        r1.adicionarPessoa(p3);
+	        r1.adicionarPessoa(p4);
+	        System.out.println(r1.toString());
+	        
+	       Query q = manager.query();
+	       q.constrain(Pessoa.class);
+	       List<Pessoa> pessoas = q.execute();
+	       System.out.println("Pessoas no banco");
+	       for(Pessoa pessoa : pessoas) {
+	    	   System.out.println(pessoa);
+	       }
+	      
 
-//			System.out.println("cadastrando...");
-//			Carro carro1 = new Carro("AAA1000", "palio");
-//			manager.store(carro1);
-//			manager.commit();
-//			
-//			Carro carro2 = new Carro("BBB2000", "onix");
-//			manager.store(carro2);
-//			manager.commit();
-//			
-//			Carro carro3 = new Carro("CCC3000", "civic");
-//			manager.store(carro3);
-//			manager.commit();
-//
-//			Cliente cli1 = new Cliente("joao", "1111");
-//			manager.store(cli1);
-//			manager.commit();
-//			
-//			Cliente cli2 = new Cliente("maria", "2222");
-//			manager.store(cli2);
-//			manager.commit();
-//			
-//			Cliente cli3 = new Cliente("jose", "3333");
-//			manager.store(cli3);
-//			manager.commit();
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

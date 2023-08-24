@@ -29,16 +29,16 @@ public class Pessoa {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Pessoa [nome=").append(nome).append(", reunioes=");
+        sb.append("Pessoa: nome=").append(nome).append(", reunioes=");
         if (reunioes.isEmpty()) {
-            sb.append("Nenhuma reuniao participada");
+            sb.append(" Nenhuma reuniao participada");
         } else {
             sb.append("\n");
             for (Reuniao r : reunioes) {
-                sb.append("  - ").append(r.toString()).append("\n");
+                sb.append(" # ").append(r.toString()).append("\n");
             }
         }
-        sb.append("]");
+      
         return sb.toString();
     }
 }

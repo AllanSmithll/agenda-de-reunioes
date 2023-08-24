@@ -39,17 +39,17 @@ public class Reuniao {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-        sb.append("Reuniao [id=").append(id).append(", data=").append(data)
-        .append(", pessoas=");
+        sb.append("Reuniao: id=").append(id).append(", data=").append(data)
+        .append("\n"+" Pessoas:");
         if(listaDePessoas.isEmpty()) {
             sb.append("Nenhuma pessoa agendada");
         } else {
             sb.append("\n");
             for (Pessoa p : listaDePessoas) {
-                sb.append("  - ").append(p.getNome()).append("\n");
+                sb.append(" * ").append(p.getNome()).append("\n");
             }
         }
-        sb.append("]");
+        
         return sb.toString();	
     }	
 }
