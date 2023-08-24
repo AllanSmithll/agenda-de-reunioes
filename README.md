@@ -9,7 +9,7 @@ dados orientado a objetos db4o.
 ## Tarefas
 - Implementar as classes do modelo de negócio para o tema fornecido
 - Implementar as 5 classes de aplicação (console):
-  - Cadastrar.java - cadastrar vários objetos do modelo de
+  - Cadastrar.java - cadastrar vários objetos do modelo de dados
   - Listar.java – listar todos os objetos cadastrados
   - Alterar.java – alterar o relacionamento entre dois objetos
   - Deletar.java – apagar um objeto que possua relacionamento
