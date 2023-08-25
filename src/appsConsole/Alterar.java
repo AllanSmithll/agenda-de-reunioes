@@ -31,19 +31,22 @@ public class Alterar {
 			q2.descend("nome").constrain("Wagner");		 
 			List<Pessoa> resultados2 = q2.execute();
 			
+   if (resultados1.size() == 0)
+				throw new Exception("Reuniao inexistente no banco.");
 			if (resultados2.size() == 0)
-				throw new Exception("Pessoa inexistente no banco."); // Pessoa inexistente
+				throw new Exception("Pessoa inexistente no banco.");
 			
 			// Remover pessoa da reuniao
 			if(resultados1.size()>0 && resultados2.size()>0) {
 				Reuniao reuniao = resultados1.get(0);
 				Pessoa pessoa = resultados2.get(0);
-				
-				reuniao.removerPessoa(pessoa);
-				manager.store(reuniao);
-				manager.store(pessoa);
-				manager.commit();
-				System.out.println("Pessoa " + pessoa.getNome() + " removida da reunião " + reuniao.getId()+".");
+    if (pessoa.getReuniao().equals(reuniao)) {
+				   reuniao.removerPessoa(pessoa);
+				   manager.store(reuniao);
+				   manager.store(pessoa);
+				   manager.commit();
+				   System.out.println("Pessoa " + pessoa.getNome() + " removida da reunião " + reuniao.getId()+".");
+    } else throw new Exception("Pessoa não esta cadastrada na reuniao")
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
