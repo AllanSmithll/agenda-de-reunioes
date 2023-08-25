@@ -36,29 +36,31 @@ public class Deletar {
 				//Deletando todas reunioes de marcio
 				for(Reuniao reuniaoAtual : marcio.getReunioes()) {
 					reuniaoAtual.removerPessoa(marcio);
-					manager.store(reuniaoAtual);
-					manager.store(marcio);
-					}
-				}
-			
-			Query q2 = manager.query();
-			q.constrain(Reuniao.class);  					 
-			List<Reuniao> reunioes = q.execute(); 
-			System.out.println(reunioes.get(0));
-			if(reunioes.size() > 0) {
-				Reuniao reuniao2 = reunioes.get(0);
-				
-				for(Pessoa pessoaAtual : reuniao2.getListaDePessoas()) {
-					if(pessoaAtual.getNome().equals("Wagner")) {
-						reuniao2.removerPessoa(pessoaAtual);
-						pessoaAtual.removerReuniao(reuniao2);
-						manager.store(pessoaAtual);
-						manager.delete(pessoaAtual);
-						manager.store(reuniao2);
+						manager.store(reuniaoAtual);
+						manager.delete(marcio);
 						manager.commit();
 					}
 				}
-			}
+			System.out.println("Marcio foi excluido do sistema");
+			
+//			Query q2 = manager.query();
+//			q.constrain(Reuniao.class);  					 
+//			List<Reuniao> reunioes = q.execute(); 
+//			System.out.println(reunioes.get(0));
+//			if(reunioes.size() > 0) {
+//				Reuniao reuniao2 = reunioes.get(0);
+//				
+//				for(Pessoa pessoaAtual : reuniao2.getListaDePessoas()) {
+//					if(pessoaAtual.getNome().equals("Wagner")) {
+//						reuniao2.removerPessoa(pessoaAtual);
+//						pessoaAtual.removerReuniao(reuniao2);
+//						manager.store(pessoaAtual);
+//						manager.delete(pessoaAtual);
+//						manager.store(reuniao2);
+//						manager.commit();
+//					}
+//				}
+//			}
 			
 			
 			}
