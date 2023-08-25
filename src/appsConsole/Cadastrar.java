@@ -37,6 +37,7 @@ public class Cadastrar {
 	       r1.adicionarPessoa(p2);
 	       r1.adicionarPessoa(p3);
 	       r1.adicionarPessoa(p4);
+	       manager.store(r1);
 	       manager.commit();
 	       System.out.println(r1.toString());
 	        
