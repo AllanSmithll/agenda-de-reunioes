@@ -41,6 +41,7 @@ public class Cadastrar {
 	       manager.commit();
 	       System.out.println(r1.toString());
 	        
+	       
 	       Query q = manager.query();
 	       q.constrain(Pessoa.class);
 	       List<Pessoa> pessoas = q.execute();
