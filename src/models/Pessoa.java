@@ -19,9 +19,9 @@ public class Pessoa {
 	public void setNome(String nome) { this.nome = nome; }
 	public List<Reuniao> getReunioes() { return this.reunioes; }
 	public void setReunioes(List<Reuniao> reunioes) { this.reunioes = reunioes; }
-	public Reuniao getGrupo(Reuniao r) {
+	public Reuniao getReuniao(Reuniao r) {
 		for(Reuniao reu : reunioes) {
-			if (reu.getId() == r.getId())
+			if (reu.equals(r))
 				return reu;
 		}
 		return null;
@@ -42,7 +42,7 @@ public class Pessoa {
 	        return false;
 	    }
 	    Pessoa pessoa = (Pessoa) obj;
-	    return nome.equals(pessoa.nome);
+	    return this.nome.equals(pessoa.nome);
 	}
 
     @Override
