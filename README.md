@@ -17,9 +17,15 @@ dados orientado a objetos db4o.
 - Apresentar o projeto
 
 ## Funcionalidades
+- Agendamento de reuniões
+- Cadastro de pessoas na reunião
+- Listagem de todas as pessoas da reunião específica
+- Edição dos dados da reunião  
+- Consultar dados das reuniões
 
 ## Contribuidores
+- Allan Amâncio - https://github.com/AllanSmithll;
+- Márcio José - https://github.com/ImMarcio.
 
 ## Licença
-
-## Conclusão
+Este projeto está licenciado sob a [Licença MIT](https://opensource.org/license/mit/).
