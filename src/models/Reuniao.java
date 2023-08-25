@@ -28,7 +28,7 @@ public class Reuniao {
 	}
 	
 	public void removerPessoa(Pessoa pessoa) {
-		this.listaDePessoas.remove(pessoa);
+		this.listaDePessoas.removeIf(p -> p.equals(pessoa));
 		pessoa.removerReuniao(this);
 	}
 	

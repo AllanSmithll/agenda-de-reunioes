@@ -25,6 +25,18 @@ public class Pessoa {
 	public void removerReuniao(Reuniao r) {	this.reunioes.remove(r); }
 	
 	public int numeroReunioes() { return this.reunioes.size(); }
+	
+	@Override
+	public boolean equals(Object obj) {
+	    if (this == obj) {
+	        return true;
+	    }
+	    if (obj == null || getClass() != obj.getClass()) {
+	        return false;
+	    }
+	    Pessoa pessoa = (Pessoa) obj;
+	    return nome.equals(pessoa.nome);
+	}
 
     @Override
     public String toString() {

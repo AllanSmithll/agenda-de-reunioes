@@ -46,7 +46,6 @@ public class Util {
 	
 	public static int gerarIReuniao() {
 		if(manager.query(Reuniao.class).size()==0) 
-			//classe nao registrada no banco
 			return 1;
 		
 		Query q = manager.query();
@@ -55,7 +54,7 @@ public class Util {
 		List<Reuniao> resultados = q.execute();
 
 		if(resultados.size()>0) {
-			Reuniao reuniao = resultados.get(0);    //max
+			Reuniao reuniao = resultados.get(0);
 			return reuniao.getId() + 1;
 		}
 		else
