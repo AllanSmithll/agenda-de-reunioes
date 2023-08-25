@@ -19,6 +19,13 @@ public class Pessoa {
 	public void setNome(String nome) { this.nome = nome; }
 	public List<Reuniao> getReunioes() { return this.reunioes; }
 	public void setReunioes(List<Reuniao> reunioes) { this.reunioes = reunioes; }
+	public Reuniao getGrupo(Reuniao r) {
+		for(Reuniao reu : reunioes) {
+			if (reu.getId() == r.getId())
+				return reu;
+		}
+		return null;
+	}
 	
 	public void adicionarReuniao(Reuniao r) { this.reunioes.add(r);	}
 	

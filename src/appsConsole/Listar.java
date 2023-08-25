@@ -20,21 +20,19 @@ import models.Reuniao;
 			Query q = manager.query();
 			q.constrain(Pessoa.class);  				
 			List<Pessoa> listaDePessoas = q.execute();
-			for(Pessoa pessoa: listaDePessoas)
+			for(Pessoa pessoa: listaDePessoas) {
 				System.out.println(pessoa);
-
-			System.out.println("\n---listagem de Reuniaos:");
+			}
+			System.out.println("\n---listagem de Reunioes:");
 			q = manager.query();
 			q.constrain(Reuniao.class);  				
 			List<Reuniao> listDeReunioes = q.execute();
-			for(Reuniao reuniao: listDeReunioes)
+			for(Reuniao reuniao: listDeReunioes) {
 				System.out.println(reuniao);
-			
-		
+			}
 
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-		} finally {
 		}
 
 		Util.desconectar();
