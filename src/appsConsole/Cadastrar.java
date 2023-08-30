@@ -35,12 +35,15 @@ public class Cadastrar {
 	       Reuniao r1 = new Reuniao("05/09/2023");
 	       Reuniao r2 = new Reuniao("05/09/2023");
 	       Reuniao r3 = new Reuniao("07/09/2023");
+	       Reuniao r4 = new Reuniao("10/09/2023");
 	       r1.setId(Util.gerarIReuniao());
 	       manager.store(r1);
 	       r2.setId(Util.gerarIReuniao());
 	       manager.store(r2);
 	       r3.setId(Util.gerarIReuniao());
-	       manager.store(r3);
+	       manager.store(r3);    
+	       r4.setId(Util.gerarIReuniao());
+	       manager.store(r4);
 	       manager.commit();
 	       
 	       r1.adicionarPessoa(p1);
@@ -52,8 +55,11 @@ public class Cadastrar {
 	       r3.adicionarPessoa(p1);
 	       r3.adicionarPessoa(p2);
 	       r3.adicionarPessoa(p3);
+	       r4.adicionarPessoa(p2);
+	       
 	       manager.store(r1);
 	       manager.store(r2);
+	       manager.store(r3);
 	       manager.commit();
 	       System.out.println("Reunioes no banco");
 	       System.out.println(r1.toString());

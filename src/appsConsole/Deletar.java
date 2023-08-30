@@ -22,43 +22,42 @@ public class Deletar {
 			manager = Util.conectarBanco();
 			System.out.println("excluindo");
 			
-			//localizar a pessoa chamada Marcio
-			Query q = manager.query();
-			q.constrain(Pessoa.class);  				
-			q.descend("nome").constrain("Marcio");		 
-			List<Pessoa> resultados = q.execute(); // select p from Pessoa p where p.nome="Marcio"
+			Query queryReuniao = manager.query();
+			queryReuniao.constrain(Reuniao.class);  							 
+			List<Reuniao> reunioes = queryReuniao.execute(); // select p from Pessoa p where p.nome="Marcio"
 			
-			if(resultados.size()>0) {
-				Pessoa marcio = resultados.get(0);
-				//Deletando todas reunioes de marcio
-				for(Reuniao reuniaoAtual : marcio.getReunioes()) {
-					reuniaoAtual.removerPessoa(marcio);
-						manager.store(reuniaoAtual);
-						manager.delete(marcio);
-						manager.commit();
-					}
+			Query queryPessoa = manager.query();
+			queryPessoa.constrain(Pessoa.class); 
+			queryPessoa.descend("nome").constrain("Marcio");
+			List<Pessoa> pessoas = queryPessoa.execute(); // select p from Pessoa p where p.nome="Marcio"
+			Pessoa marcio = pessoas.get(0);
+			System.out.println(marcio);
+			//Removendo todas as reuniões agendadas da pessoa Marcio,
+			//e caso a reuniao não tenha mais membros ela é deletada
+			for (Reuniao reuniao : reunioes) {
+				if(reuniao.getParticipanteReuniao(marcio)) {
+					reuniao.removerPessoa(marcio);
+					manager.store(reuniao);
+					System.out.println("Números de pessoas" +reuniao.numeroPessoasDaReuniao() + reuniao.getId());
+				}if(reuniao.numeroPessoasDaReuniao() == 0) {
+					manager.delete(reuniao);
+					
 				}
-			System.out.println("Marcio foi excluido do sistema");
+				manager.commit();
+			}
 			
-//			Query q2 = manager.query();
-//			q.constrain(Reuniao.class);  					 
-//			List<Reuniao> reunioes = q.execute(); 
-//			System.out.println(reunioes.get(0));
-//			if(reunioes.size() > 0) {
-//				Reuniao reuniao2 = reunioes.get(0);
-//				
-//				for(Pessoa pessoaAtual : reuniao2.getListaDePessoas()) {
-//					if(pessoaAtual.getNome().equals("Wagner")) {
-//						reuniao2.removerPessoa(pessoaAtual);
-//						pessoaAtual.removerReuniao(reuniao2);
-//						manager.store(pessoaAtual);
-//						manager.delete(pessoaAtual);
-//						manager.store(reuniao2);
-//						manager.commit();
-//					}
-//				}
-//			}
 			
+			
+			//Deletando todas as reuniões orfãos
+			for (Reuniao reuniao : reunioes) {
+				if(reuniao.numeroPessoasDaReuniao() == 0) {
+					manager.delete(reuniao);
+					manager.commit();
+				}
+				System.out.println("Não tem reuniao orfão");
+			}
+			
+
 			
 			}
 
