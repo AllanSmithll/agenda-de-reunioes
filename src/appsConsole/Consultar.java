@@ -7,6 +7,7 @@ import com.db4o.query.Candidate;
 import com.db4o.query.Evaluation;
 import com.db4o.query.Query;
 
+import models.Pessoa;
 import models.Reuniao;
 
 public class Consultar {
@@ -18,30 +19,32 @@ public class Consultar {
 			
 			System.out.println("Consultas na Agenda de Reunioes... \n");
 			System.out.println("\n1- Quais as reunioes na data X?");
+			System.out.println("Data escolhida: 05/09/2023");
 			Query q;
 			q = manager.query();
 			q.constrain(Reuniao.class);
-			q.descend("data").constrain("12/10/2023");
+			q.descend("data").constrain("05/09/2023");
 			List<Reuniao> reunioes = q.execute();
-			for(Reuniao a : reunioes)
-				System.out.println(a);
+			for(Reuniao r : reunioes)
+				System.out.println(r);
 			
 			
-//			System.out.println("\nAlugueis nao finalizados");
-//			q = manager.query();
-//			q.constrain(Aluguel.class);
-//			q.descend("finalizado").constrain(false);
-//			List<Aluguel> resultados2 = q.execute();
-//			for(Aluguel a : resultados2)
-//				System.out.println(a);
-//			
-//			System.out.println("\nCarros que possuem alugueis de 9 dias");
-//			q = manager.query();
-//			q.constrain(Carro.class);
-//			q.descend("alugueis").descend("dias").constrain(9);
-//			List<Carro> resultados3 = q.execute();
-//			for(Carro c : resultados3)
-//				System.out.println(c);
+			System.out.println("\n2- Quais as reunioes com a pessoa de nome X?");
+			System.out.println("Nome escolhido: Allan");
+			q = manager.query();
+			q.constrain(Reuniao.class);
+			q.descend("listaDePessoas").descend("nome").constrain("Allan");
+			List<Reuniao> reunioes_pessoa = q.execute();
+			for(Reuniao r : reunioes_pessoa)
+				System.out.println(r);
+			
+			System.out.println("\n3- Quais as pessoas que tem mais de N reunioes?");
+			q = manager.query();
+			q.constrain(Pessoa.class);
+			q.constrain(new Filtro1());
+			List<Pessoa> pessoas = q.execute();
+			for(Pessoa p :pessoas)
+				System.out.println(p);
 //			
 //			System.out.println("\nCarros que possuem 1 alugueis");
 //			q = manager.query();
@@ -67,16 +70,18 @@ public class Consultar {
 	}
 }
 
-//classe interna
-//class Filtro1 implements Evaluation {
-//	public void evaluate(Candidate candidate) {
-//		Carro car = (Carro) candidate.getObject();
-//		if(car.getAlugueis().size()== 1) 
-//			candidate.include(true); 
-//		else		
-//			candidate.include(false);
-//	}
-//}
+// class interna
+@SuppressWarnings("serial")
+class Filtro1 implements Evaluation {
+	public void evaluate(Candidate candidate) {
+		Pessoa p = (Pessoa) candidate.getObject();
+		int quantidade = 2;
+		if(p.getReunioes().size() > quantidade) 
+			candidate.include(true);
+		else		
+			candidate.include(false);
+	}
+}
 //
 //class Filtro2 implements Evaluation {
 //	public void evaluate(Candidate candidate) {

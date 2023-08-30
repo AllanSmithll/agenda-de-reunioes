@@ -32,12 +32,15 @@ public class Cadastrar {
 	       manager.store(p4);
 	       manager.commit();
 	         
-	       Reuniao r1 = new Reuniao("10/10/2023");
-	       Reuniao r2 = new Reuniao("12/10/2023");
+	       Reuniao r1 = new Reuniao("05/09/2023");
+	       Reuniao r2 = new Reuniao("05/09/2023");
+	       Reuniao r3 = new Reuniao("07/09/2023");
 	       r1.setId(Util.gerarIReuniao());
 	       manager.store(r1);
 	       r2.setId(Util.gerarIReuniao());
 	       manager.store(r2);
+	       r3.setId(Util.gerarIReuniao());
+	       manager.store(r3);
 	       manager.commit();
 	       
 	       r1.adicionarPessoa(p1);
@@ -46,11 +49,16 @@ public class Cadastrar {
 	       r1.adicionarPessoa(p4);
 	       r2.adicionarPessoa(p1);
 	       r2.adicionarPessoa(p4);
+	       r3.adicionarPessoa(p1);
+	       r3.adicionarPessoa(p2);
+	       r3.adicionarPessoa(p3);
 	       manager.store(r1);
 	       manager.store(r2);
 	       manager.commit();
+	       System.out.println("Reunioes no banco");
 	       System.out.println(r1.toString());
-	        
+	       System.out.println(r2.toString());
+	       System.out.println(r3.toString());
 	       
 	       Query q = manager.query();
 	       q.constrain(Pessoa.class);

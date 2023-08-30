@@ -67,7 +67,7 @@ public class Reuniao {
 		} else {
 			sb.append("\n");
 			for (Pessoa p : listaDePessoas) {
-				sb.append(" * ").append(p.getNome()).append("\n");
+				sb.append(" - ").append(p.getNome()).append("\n");
 			}
 		}
 
