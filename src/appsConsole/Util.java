@@ -1,3 +1,7 @@
+/*
+ * Util class
+ * @authors Allan Amancio e Marcio Jose
+ */
 package appsConsole;
 
 import java.util.List;

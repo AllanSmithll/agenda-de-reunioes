@@ -1,3 +1,7 @@
+/*
+ * Cadastrar class
+ * @authors Allan Amancio e Marcio Jose
+ */
 package appsConsole;
 
 import java.util.List;
@@ -29,15 +33,21 @@ public class Cadastrar {
 	       manager.commit();
 	         
 	       Reuniao r1 = new Reuniao("10/10/2023");
+	       Reuniao r2 = new Reuniao("12/10/2023");
 	       r1.setId(Util.gerarIReuniao());
 	       manager.store(r1);
+	       r2.setId(Util.gerarIReuniao());
+	       manager.store(r2);
 	       manager.commit();
 	       
 	       r1.adicionarPessoa(p1);
 	       r1.adicionarPessoa(p2);
 	       r1.adicionarPessoa(p3);
 	       r1.adicionarPessoa(p4);
+	       r2.adicionarPessoa(p1);
+	       r2.adicionarPessoa(p4);
 	       manager.store(r1);
+	       manager.store(r2);
 	       manager.commit();
 	       System.out.println(r1.toString());
 	        

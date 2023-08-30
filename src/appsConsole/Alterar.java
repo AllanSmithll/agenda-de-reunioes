@@ -1,5 +1,5 @@
 /*
- * Pessoa class
+ * Alterar class
  * @authors Allan Amancio e Marcio Jose
  */
 package appsConsole;
