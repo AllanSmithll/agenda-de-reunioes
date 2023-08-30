@@ -82,18 +82,3 @@ class Filtro1 implements Evaluation {
 			candidate.include(false);
 	}
 }
-//
-//class Filtro2 implements Evaluation {
-//	public void evaluate(Candidate candidate) {
-//		Carro car = (Carro) candidate.getObject();
-//		boolean finalizado = true;
-//		for(Aluguel a : car.getAlugueis())
-//			if(!a.isFinalizado())
-//				finalizado=false;
-//				
-//		if(finalizado)
-//			candidate.include(true);
-//		else		
-//			candidate.include(false);
-//	}
-//}
