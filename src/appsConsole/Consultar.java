@@ -45,17 +45,6 @@ public class Consultar {
 			List<Pessoa> pessoas = q.execute();
 			for(Pessoa p :pessoas)
 				System.out.println(p);
-//			
-//			System.out.println("\nCarros que possuem 1 alugueis");
-//			q = manager.query();
-//			q.constrain(Carro.class);
-//			q.constrain(new Filtro1());
-//			List<Carro> resultados4 = q.execute();
-//			for(Carro c : resultados4)
-//				System.out.println(c);
-			
-			
-			//System.out.println("\nClientes que possuem 2 alugueis");
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
