@@ -39,7 +39,7 @@ public class Deletar {
 					reuniao.removerPessoa(marcio);
 					manager.store(reuniao);
 					System.out.println("Números de pessoas" +reuniao.numeroPessoasDaReuniao() + reuniao.getId());
-				}if(reuniao.numeroPessoasDaReuniao() == 0) {
+				}if(reuniao.numeroPessoasDaReuniao() == 1) {
 					manager.delete(reuniao);
 					
 				}
