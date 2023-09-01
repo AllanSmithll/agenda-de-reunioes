@@ -38,7 +38,7 @@ public class Deletar {
 				if(reuniao.getParticipanteReuniao(marcio)) {
 					reuniao.removerPessoa(marcio);
 					manager.store(reuniao);
-					System.out.println("Números de pessoas" +reuniao.numeroPessoasDaReuniao() + reuniao.getId());
+				
 				}if(reuniao.numeroPessoasDaReuniao() == 1) {
 					manager.delete(reuniao);
 					
@@ -50,11 +50,10 @@ public class Deletar {
 			
 			//Deletando todas as reuniões orfãos
 			for (Reuniao reuniao : reunioes) {
-				if(reuniao.numeroPessoasDaReuniao() == 0) {
+				if(reuniao.numeroPessoasDaReuniao() == 1) {
 					manager.delete(reuniao);
 					manager.commit();
 				}
-				System.out.println("Não tem reuniao orfão");
 			}
 			
 

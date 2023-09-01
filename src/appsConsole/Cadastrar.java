@@ -36,6 +36,7 @@ public class Cadastrar {
 	       Reuniao r2 = new Reuniao("05/09/2023");
 	       Reuniao r3 = new Reuniao("07/09/2023");
 	       Reuniao r4 = new Reuniao("10/09/2023");
+	       Reuniao r5 = new Reuniao("11/11/2023");
 	       r1.setId(Util.gerarIReuniao());
 	       manager.store(r1);
 	       r2.setId(Util.gerarIReuniao());
@@ -44,6 +45,8 @@ public class Cadastrar {
 	       manager.store(r3);    
 	       r4.setId(Util.gerarIReuniao());
 	       manager.store(r4);
+	       r5.setId(Util.gerarIReuniao());
+	       manager.store(r5);
 	       manager.commit();
 	       
 	       r1.adicionarPessoa(p1);
@@ -56,7 +59,8 @@ public class Cadastrar {
 	       r3.adicionarPessoa(p2);
 	       r3.adicionarPessoa(p3);
 	       r4.adicionarPessoa(p2);
-	       
+	       r4.adicionarPessoa(p3);
+	       r5.adicionarPessoa(p3);
 	       manager.store(r1);
 	       manager.store(r2);
 	       manager.store(r3);
