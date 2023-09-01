@@ -39,6 +39,7 @@ public class Consultar {
 				System.out.println(r);
 			
 			System.out.println("\n3- Quais as pessoas que tem mais de N reunioes?");
+			System.out.println("Quantidade escolhida: 2");
 			q = manager.query();
 			q.constrain(Pessoa.class);
 			q.constrain(new Filtro1());
