@@ -32,21 +32,18 @@ public class Deletar {
 			List<Pessoa> pessoas = queryPessoa.execute(); // select p from Pessoa p where p.nome="Marcio"
 			Pessoa marcio = pessoas.get(0);
 			System.out.println(marcio);
-			//Removendo todas as reuniões agendadas da pessoa Marcio,
-			//e caso a reuniao não tenha mais membros ela é deletada
+			//Removendo todas as reunioes agendadas da pessoa Marcio,
+			//e caso a reuniao não tenha mais membros ela sera deletada
 			for (Reuniao reuniao : reunioes) {
 				if(reuniao.getParticipanteReuniao(marcio)) {
 					reuniao.removerPessoa(marcio);
 					manager.store(reuniao);
 				
-				}if(reuniao.numeroPessoasDaReuniao() == 1) {
+				} if(reuniao.numeroPessoasDaReuniao() == 1) {
 					manager.delete(reuniao);
-					
 				}
 				manager.commit();
 			}
-			
-			
 			
 			//Deletando todas as reuniões orfãos
 			for (Reuniao reuniao : reunioes) {
@@ -55,11 +52,7 @@ public class Deletar {
 					manager.commit();
 				}
 			}
-			
-
-			
 			}
-
 		 catch (Exception e) {
 			System.out.println(e.getMessage());
 		}

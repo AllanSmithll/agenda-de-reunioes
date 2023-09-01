@@ -69,6 +69,8 @@ public class Cadastrar {
 	       System.out.println(r1.toString());
 	       System.out.println(r2.toString());
 	       System.out.println(r3.toString());
+	       System.out.println(r4.toString());
+	       System.out.println(r5.toString());
 	       
 	       Query q = manager.query();
 	       q.constrain(Pessoa.class);
