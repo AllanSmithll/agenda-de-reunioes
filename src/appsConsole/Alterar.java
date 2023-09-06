@@ -43,6 +43,7 @@ public class Alterar {
 
 				if (pessoa.getReuniao(reuniao) != null) {
 					reuniao.removerPessoa(pessoa);
+					pessoa.removerReuniao(reuniao);
 					manager.store(reuniao);
 					manager.store(pessoa);
 					manager.commit();
