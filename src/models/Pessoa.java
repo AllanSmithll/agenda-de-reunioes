@@ -50,7 +50,7 @@ public class Pessoa {
         StringBuilder sb = new StringBuilder();
         sb.append("Pessoa: nome=").append(nome).append(", reunioes=");
         if (reunioes.isEmpty()) {
-            sb.append(" Nenhuma reuniao participada");
+            sb.append(" Nenhuma reuniao agendada");
         } else {
             sb.append("\n");
             for (Reuniao r : reunioes) {
