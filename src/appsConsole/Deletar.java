@@ -49,7 +49,7 @@ public class Deletar {
 			
 			//Deletando todas as reuniões orfãos
 			for (Reuniao reuniao : reunioes) {
-				if(reuniao.numeroPessoasDaReuniao() == 1) {
+				if(reuniao.numeroPessoasDaReuniao() < 2) {
 					manager.delete(reuniao);
 					
 				}
