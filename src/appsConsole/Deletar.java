@@ -24,34 +24,38 @@ public class Deletar {
 			
 			Query queryReuniao = manager.query();
 			queryReuniao.constrain(Reuniao.class);  							 
-			List<Reuniao> reunioes = queryReuniao.execute(); // select p from Pessoa p where p.nome="Marcio"
+			List<Reuniao> reunioes = queryReuniao.execute(); 
 			
 			Query queryPessoa = manager.query();
 			queryPessoa.constrain(Pessoa.class); 
 			queryPessoa.descend("nome").constrain("Marcio");
 			List<Pessoa> pessoas = queryPessoa.execute(); // select p from Pessoa p where p.nome="Marcio"
+			
 			Pessoa marcio = pessoas.get(0);
-			System.out.println(marcio);
+	
 			//Removendo todas as reunioes agendadas da pessoa Marcio,
 			//e caso a reuniao não tenha mais membros ela sera deletada
-			for (Reuniao reuniao : reunioes) {
-				if(reuniao.getParticipanteReuniao(marcio)) {
-					reuniao.removerPessoa(marcio);
-					manager.store(reuniao);
-				
-				} if(reuniao.numeroPessoasDaReuniao() == 1) {
-					manager.delete(reuniao);
+			if(pessoas.size() > 0) {
+				for (Reuniao reuniao : reunioes) {
+					if(reuniao.getParticipanteReuniao(marcio)) {
+						reuniao.removerPessoa(marcio);
+						manager.store(reuniao);	
+						marcio.removerReuniao(reuniao);
+						manager.store(marcio);;
+					} 
+					
 				}
-				manager.commit();
 			}
 			
 			//Deletando todas as reuniões orfãos
 			for (Reuniao reuniao : reunioes) {
 				if(reuniao.numeroPessoasDaReuniao() == 1) {
 					manager.delete(reuniao);
-					manager.commit();
+					
 				}
 			}
+
+			manager.commit();
 			}
 		 catch (Exception e) {
 			System.out.println(e.getMessage());

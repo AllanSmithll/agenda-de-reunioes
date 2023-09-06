@@ -64,13 +64,10 @@ public class Cadastrar {
 	       manager.store(r1);
 	       manager.store(r2);
 	       manager.store(r3);
+	       manager.store(r4);
+	       manager.store(r5);
 	       manager.commit();
-	       System.out.println("Reunioes no banco");
-	       System.out.println(r1.toString());
-	       System.out.println(r2.toString());
-	       System.out.println(r3.toString());
-	       System.out.println(r4.toString());
-	       System.out.println(r5.toString());
+	    
 	       
 	       Query q = manager.query();
 	       q.constrain(Pessoa.class);
@@ -79,6 +76,16 @@ public class Cadastrar {
 	       for(Pessoa pessoa : pessoas) {
 	    	   System.out.println(pessoa);
 	       }	
+	       
+	       Query q2 = manager.query();
+	       q2.constrain(Reuniao.class);
+	       List<Reuniao> reunioes = q2.execute();
+	       System.out.println("Reunioes no banco");
+	       for(Reuniao reuniao : reunioes) {
+	    	   System.out.println(reuniao);
+	       }	
+	       
+	       
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}

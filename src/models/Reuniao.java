@@ -37,8 +37,9 @@ public class Reuniao {
 	}
 
 	public void removerPessoa(Pessoa pessoa) throws Exception {
-		this.listaDePessoas.removeIf(p -> p.equals(pessoa));
-		pessoa.removerReuniao(this);
+		this.listaDePessoas.remove(pessoa);
+//		this.listaDePessoas.removeIf(p -> p.equals(pessoa));
+//		pessoa.removerReuniao(this);
 	}
 
 	public int numeroPessoasDaReuniao() {

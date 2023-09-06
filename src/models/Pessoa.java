@@ -1,5 +1,5 @@
 /*
- * Pessoa class
+  * Pessoa class
  * @authors Allan Amancio e Marcio Jose
  */
 package models;
@@ -54,7 +54,9 @@ public class Pessoa {
         } else {
             sb.append("\n");
             for (Reuniao r : reunioes) {
+            	if(r != null) {
                 sb.append(" # ").append(r.toString()).append("\n");
+                }
             }
         }
       

@@ -1,5 +1,5 @@
 /*
- * Listar class
+  * Listar class
  * @authors Allan Amancio e Marcio Jose
  */
 package appsConsole;
@@ -29,8 +29,9 @@ import models.Reuniao;
 			System.out.println("\n---listagem de Reunioes:");
 			q = manager.query();
 			q.constrain(Reuniao.class);  				
-			List<Reuniao> listDeReunioes = q.execute();
-			for(Reuniao reuniao: listDeReunioes) {
+			List<Reuniao> listaDeReunioes = q.execute();
+			
+			for(Reuniao reuniao: listaDeReunioes) {
 				System.out.println(reuniao);
 			}
 
