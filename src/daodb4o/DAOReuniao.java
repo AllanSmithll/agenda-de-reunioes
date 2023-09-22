@@ -15,8 +15,8 @@ import models.Reuniao;
 
 public class DAOReuniao extends DAO<Reuniao>{
 
-	public Reuniao read (Object codigo){
-		int id = (int) codigo;	
+	public Reuniao read (Object chave){
+		int id = (int) chave;	
 		Query q = manager.query();
 		q.constrain(Reuniao.class);
 		q.descend("id").constrain(id);
