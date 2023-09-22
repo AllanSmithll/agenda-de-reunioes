@@ -1,7 +1,7 @@
 /**********************************
  * IFPB - Curso Superior de Tec. em Sist. para Internet
  * Persistencia de Objetos
- * Prof. Fausto Maranhão Ayres
+ * Prof. Fausto Maranhï¿½o Ayres
  **********************************/
 
 package daodb4o;
@@ -25,8 +25,6 @@ public abstract class DAO<T> implements DAOInterface<T> {
 	public static void close(){
 		Util.desconectar();
 	}
-
-	//----------CRUD-----------------------
 
 	public void create(T obj){
 		manager.store( obj );
@@ -71,31 +69,25 @@ public abstract class DAO<T> implements DAOInterface<T> {
 		}
 	}
 
-	//--------transação---------------
-	public static void begin(){	
-	}		// tem que ser vazio
+	public static void begin(){	}
 
 	public static void commit(){
 		manager.commit();
 	}
+	
 	public static void rollback(){
 		manager.rollback();
 	}
-
-	//	gerar novo id para uma classe T
-	//  consulta o maior valor armazenado no atributo "id" 
 
 	public int gerarId() {
 		@SuppressWarnings("unchecked")
 		Class<T> type =(Class<T>) ((ParameterizedType) this.getClass()
 				.getGenericSuperclass()).getActualTypeArguments()[0];
 
-		//verificar se o banco esta vazio 
 		if(manager.query(type).size()==0) {
-			return 1;			//primeiro id gerado
+			return 1;
 		}
 		else {
-			//obter o maior valor de id para o tipo
 			Query q = manager.query();
 			q.constrain(type);
 			q.descend("id").orderDescending();
@@ -119,6 +111,4 @@ public abstract class DAO<T> implements DAOInterface<T> {
 				}
 		}
 	}
-
 }
-

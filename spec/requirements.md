@@ -17,6 +17,11 @@
    - **Alterar.java**: Permite alterar o relacionamento entre dois objetos.
    - **Deletar.java**: Permite apagar um objeto que possua relacionamentos.
    - **Consultar.java**: Implementa consultas utilizando a API Soda.
+   
+### Implementar consultas interessantes
+- quais as reunioes na data X
+- quais as reunioes com a pessoa de nome X
+- quais as pessoas que tem mais de N reunioes
 
 ### Implementação das Classes DAO
 

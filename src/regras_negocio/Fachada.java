@@ -9,7 +9,7 @@ package regras_negocio;
 import java.util.List;
 
 import daodb4o.DAO;
-import daodb4o.DAOAluguel;
+import daodb4o.DAOReuniao;
 import daodb4o.DAOCarro;
 import daodb4o.DAOCliente;
 import daodb4o.DAOUsuario;
@@ -22,7 +22,7 @@ public class Fachada {
 	private Fachada() {}
 
 	private static DAOCarro daocarro = new DAOCarro();  
-	private static DAOAluguel daoaluguel = new DAOAluguel(); 
+	private static DAOReuniao daoaluguel = new DAOReuniao(); 
 	private static DAOCliente daocliente = new DAOCliente(); 
 	private static DAOUsuario daousuario = new DAOUsuario(); 
 	public static Usuario logado;	//contem o objeto Usuario logado em TelaLogin.java
