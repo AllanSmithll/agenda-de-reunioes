@@ -6,25 +6,21 @@ package regras_negocio;
  *
  */
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import daodb4o.DAO;
+import daodb4o.DAOPessoa;
 import daodb4o.DAOReuniao;
-import daodb4o.DAOCarro;
-import daodb4o.DAOCliente;
-import daodb4o.DAOUsuario;
-import modelo.Aluguel;
-import modelo.Carro;
-import modelo.Cliente;
-import modelo.Usuario;
+import models.Reuniao;
+import models.Usuario;
 
 public class Fachada {
 	private Fachada() {}
 
-	private static DAOCarro daocarro = new DAOCarro();  
-	private static DAOReuniao daoaluguel = new DAOReuniao(); 
-	private static DAOCliente daocliente = new DAOCliente(); 
-	private static DAOUsuario daousuario = new DAOUsuario(); 
+	private static DAOReuniao daoreuniao = new DAOReuniao(); 
+	private static DAOPessoa daopessoa = new DAOPessoa(); 
 	public static Usuario logado;	//contem o objeto Usuario logado em TelaLogin.java
 
 	public static void inicializar(){
@@ -35,16 +31,26 @@ public class Fachada {
 	}
 
 
-	public static Carro cadastrarCarro(String placa, String modelo) throws Exception{
+	public static Reuniao cadastrarReuniao(String data) throws Exception{
 		DAO.begin();
-		Carro carro = daocarro.read(placa);
-		if (carro!=null)
-			throw new Exception("carro ja cadastrado:" + placa);
-		carro = new Carro(placa, modelo);
+		if (data.equals(null) || data.isEmpty()) {
+			throw new Exception("A data da reuniao nao pode ser vazia.");
+		}
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		LocalDate dataReuniao = LocalDate.parse(data, formatter);
+		LocalDate dataAtual = LocalDate.now();
+		if (dataReuniao.isBefore(dataAtual)) {
+			throw new Exception("A data da reuniao deve ser para hoje ou no futuro.");
+		}
+		Reuniao reuniao = new Reuniao(data);
 
-		daocarro.create(carro);
+		try {
+			daoreuniao.create(reuniao);
+		} catch(Exception e) {
+			throw new Exception("Erro ao cadastrar a reuniao: "+e.getMessage());
+		}
 		DAO.commit();
-		return carro;
+		return reuniao;
 	}
 
 	public static Aluguel alugarCarro(String cpf, String placa, double diaria, String data1, String data2) throws Exception{

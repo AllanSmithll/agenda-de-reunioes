@@ -32,6 +32,7 @@
 4. Implementar na classe Fachada os seguintes requisitos:
 
    - Criar, alterar, excluir, localizar e listar objetos de cada classe de negócio.
+   - Deve-se ser criadas no sistema reuniões no dia do cadastro ou em dias futuros.
 
 ### Aplicações Gráficas
 
