@@ -1,6 +1,7 @@
 .vscode
 .project
 .classpath
+.idea
 
 # Compiled class file
 *.class
