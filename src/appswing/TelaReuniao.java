@@ -33,25 +33,25 @@ import javax.swing.table.DefaultTableModel;
 import com.db4o.ObjectContainer;
 
 import modelo.Aluguel;
-import modelo.Cliente;
+import modelo.Carro;
+import models.Pessoa;
+import models.Reuniao;
 import regras_negocio.Fachada;
 
-public class TelaCliente {
+public class TelaReuniao {
 	private JDialog frame;
 	private JTable table;
 	private JScrollPane scrollPane;
 	private JTextField textField;
-	private JTextField textField_1;
 	private JButton button;
 	private JButton button_1;
 	private JButton button_2;
 	private JLabel label;
 	private JLabel label_2;
-	private JLabel label_3;
 	private JLabel label_4;
 
 	private ObjectContainer manager;
-	private JButton button_3;
+	private JButton btnExibirPessoas;
 
 	/**
 	 * Launch the application.
@@ -60,7 +60,7 @@ public class TelaCliente {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TelaCliente tela = new TelaCliente();
+					TelaReuniao tela = new TelaReuniao();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -71,7 +71,7 @@ public class TelaCliente {
 	/**
 	 * Create the application.
 	 */
-	public TelaCliente() {
+	public TelaReuniao() {
 		initialize();
 		frame.setVisible(true);
 	}
@@ -82,9 +82,9 @@ public class TelaCliente {
 	private void initialize() {
 		frame = new JDialog();
 		frame.setModal(true);
-		
+
 		frame.setResizable(false);
-		frame.setTitle("Cliente");
+		frame.setTitle("Reuniao");
 		frame.setBounds(100, 100, 729, 385);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
@@ -108,13 +108,13 @@ public class TelaCliente {
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				label_4.setText("selecionado="+ (String) table.getValueAt( table.getSelectedRow(), 0));
+				label_4.setText("selecionado="+ (int) table.getValueAt( table.getSelectedRow(), 0));
 			}
 		});
 		table.setGridColor(Color.BLACK);
 		table.setRequestFocusEnabled(false);
 		table.setFocusable(false);
-		table.setBackground(Color.ORANGE);
+		table.setBackground(Color.YELLOW);
 		table.setFillsViewportHeight(true);
 		table.setRowSelectionAllowed(true);
 		table.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -133,7 +133,7 @@ public class TelaCliente {
 		label_4.setBounds(21, 190, 431, 14);
 		frame.getContentPane().add(label_4);
 
-		label_2 = new JLabel("cpf:");
+		label_2 = new JLabel("data:");
 		label_2.setHorizontalAlignment(SwingConstants.LEFT);
 		label_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		label_2.setBounds(21, 269, 71, 14);
@@ -145,18 +145,18 @@ public class TelaCliente {
 		textField.setBounds(68, 264, 195, 20);
 		frame.getContentPane().add(textField);
 
-		button_1 = new JButton("Criar novo cliente");
+		button_1 = new JButton("Criar nova Reunião");
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					if(textField.getText().isEmpty() || textField_1.getText().isEmpty()) {
+					if(textField.getText().isEmpty()) {
 						label.setText("campo vazio");
 						return;
 					}
-					String cpf = textField.getText();
-					String nome = textField_1.getText();
-					Fachada.cadastrarCliente(nome, cpf);
-					label.setText("cliente criado: "+ nome);
+					String data = textField.getText();
+			
+					Fachada.cadastrarReuniao(data);
+					label.setText("reuniao criado: "+ data);
 					listagem();
 				}
 				catch(Exception ex) {
@@ -165,7 +165,7 @@ public class TelaCliente {
 			}
 		});
 		button_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		button_1.setBounds(525, 265, 153, 23);
+		button_1.setBounds(281, 265, 153, 23);
 		frame.getContentPane().add(button_1);
 
 		button = new JButton("Listar");
@@ -178,27 +178,16 @@ public class TelaCliente {
 		button.setBounds(308, 11, 89, 23);
 		frame.getContentPane().add(button);
 
-		label_3 = new JLabel("nome:");
-		label_3.setHorizontalAlignment(SwingConstants.LEFT);
-		label_3.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		label_3.setBounds(281, 269, 63, 14);
-		frame.getContentPane().add(label_3);
-
-		textField_1 = new JTextField();
-		textField_1.setFont(new Font("Dialog", Font.PLAIN, 12));
-		textField_1.setColumns(10);
-		textField_1.setBounds(336, 264, 168, 20);
-		frame.getContentPane().add(textField_1);
-
 		button_2 = new JButton("Apagar selecionado");
 		button_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try{
 					if (table.getSelectedRow() >= 0){	
 						label.setText("nao implementado " );
-						String cpf = (String) table.getValueAt( table.getSelectedRow(), 0);
-						Fachada.excluirCliente(cpf);
-						label.setText("cliente apagado" );
+						int id = (int) table.getValueAt( table.getSelectedRow(), 0);
+
+						Fachada.excluirReuniao(id);
+						label.setText("reuniao apagado" );
 						listagem();
 					}
 					else
@@ -213,24 +202,25 @@ public class TelaCliente {
 		button_2.setBounds(281, 213, 171, 23);
 		frame.getContentPane().add(button_2);
 
-		button_3 = new JButton("exibir alugueis");
-		button_3.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		button_3.addActionListener(new ActionListener() {
+		btnExibirPessoas = new JButton("exibir pessoas");
+		btnExibirPessoas.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		btnExibirPessoas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try{
 					if (table.getSelectedRow() >= 0){	
-						String cpf = (String) table.getValueAt( table.getSelectedRow(), 0);
-						Cliente cliente = Fachada.localizarCliente(cpf);
+						int idreuniao = (int) table.getValueAt( table.getSelectedRow(), 0);
+						Reuniao reuniao = Fachada.localizarReuniao(idreuniao);
 
-						if(cliente !=  null) {
+						if(reuniao != null) {
 							String texto="";
-							if(cliente.getAlugueis().isEmpty())
+							if(reuniao.getListaDePessoas().isEmpty())
 								texto = "nao possui alugueis";
 							else
-								for (Aluguel a : cliente.getAlugueis()) 
-									texto = texto + a.getDatainicio()+ "-" + a.getDatafim() + "-" +a.getCarro().getPlaca()+ "\n";
+								for (Pessoa a : reuniao.getListaDePessoas()) {
+									texto = texto + a.getNome() + "\n";
+								}
 
-							JOptionPane.showMessageDialog(frame, texto, "alugueis", 1);
+							JOptionPane.showMessageDialog(frame, texto, "pessoas", 1);
 						}
 					}
 				}
@@ -239,24 +229,25 @@ public class TelaCliente {
 				}
 			}
 		});
-		button_3.setBounds(96, 214, 134, 23);
-		frame.getContentPane().add(button_3);
+		btnExibirPessoas.setBounds(47, 215, 134, 23);
+		frame.getContentPane().add(btnExibirPessoas);
 	}
 
 	public void listagem() {
 		try{
-			List<Cliente> lista = Fachada.listarClientes();
+			List<Reuniao> lista = Fachada.listarReunioes();
 
 			// model armazena todas as linhas e colunas do table
 			DefaultTableModel model = new DefaultTableModel();
 
 			//adicionar colunas no model
-			model.addColumn("cpf");
-			model.addColumn("nome");
+			model.addColumn("ID");
+			model.addColumn("Data");
+			model.addColumn("alugado");
 
 			//adicionar linhas no model
-			for(Cliente cli : lista) {
-				model.addRow(new Object[]{cli.getCpf(), cli.getNome()} );
+			for(Reuniao reuniao : lista) {
+				model.addRow(new Object[]{reuniao.getId(), reuniao.getData()} );
 			}
 
 			//atualizar model no table (visualizacao)
@@ -268,4 +259,6 @@ public class TelaCliente {
 			label.setText(erro.getMessage());
 		}
 	}
+
+
 }

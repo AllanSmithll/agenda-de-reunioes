@@ -11,7 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import modelo.Usuario;
+import models.Usuario;
 import regras_negocio.Fachada;
 
 public class TelaLogin {

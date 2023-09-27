@@ -32,21 +32,19 @@ import javax.swing.table.DefaultTableModel;
 
 import com.db4o.ObjectContainer;
 
-import modelo.Aluguel;
-import modelo.Carro;
+import models.Pessoa;
+import models.Reuniao;
 import regras_negocio.Fachada;
 
-public class TelaCarro {
+public class TelaPessoa {
 	private JDialog frame;
 	private JTable table;
 	private JScrollPane scrollPane;
-	private JTextField textField;
 	private JTextField textField_1;
 	private JButton button;
 	private JButton button_1;
 	private JButton button_2;
 	private JLabel label;
-	private JLabel label_2;
 	private JLabel label_3;
 	private JLabel label_4;
 
@@ -60,7 +58,7 @@ public class TelaCarro {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TelaCarro tela = new TelaCarro();
+					TelaPessoa tela = new TelaPessoa();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -71,7 +69,7 @@ public class TelaCarro {
 	/**
 	 * Create the application.
 	 */
-	public TelaCarro() {
+	public TelaPessoa() {
 		initialize();
 		frame.setVisible(true);
 	}
@@ -82,9 +80,9 @@ public class TelaCarro {
 	private void initialize() {
 		frame = new JDialog();
 		frame.setModal(true);
-
+		
 		frame.setResizable(false);
-		frame.setTitle("Carro");
+		frame.setTitle("Pessoa");
 		frame.setBounds(100, 100, 729, 385);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
@@ -114,7 +112,7 @@ public class TelaCarro {
 		table.setGridColor(Color.BLACK);
 		table.setRequestFocusEnabled(false);
 		table.setFocusable(false);
-		table.setBackground(Color.YELLOW);
+		table.setBackground(Color.ORANGE);
 		table.setFillsViewportHeight(true);
 		table.setRowSelectionAllowed(true);
 		table.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -133,30 +131,17 @@ public class TelaCarro {
 		label_4.setBounds(21, 190, 431, 14);
 		frame.getContentPane().add(label_4);
 
-		label_2 = new JLabel("placa:");
-		label_2.setHorizontalAlignment(SwingConstants.LEFT);
-		label_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		label_2.setBounds(21, 269, 71, 14);
-		frame.getContentPane().add(label_2);
-
-		textField = new JTextField();
-		textField.setFont(new Font("Dialog", Font.PLAIN, 12));
-		textField.setColumns(10);
-		textField.setBounds(68, 264, 195, 20);
-		frame.getContentPane().add(textField);
-
-		button_1 = new JButton("Criar novo carro");
+		button_1 = new JButton("Criar nova Pessoa");
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					if(textField.getText().isEmpty() || textField_1.getText().isEmpty()) {
+					if( textField_1.getText().isEmpty()) {
 						label.setText("campo vazio");
 						return;
 					}
-					String placa = textField.getText();
-					String modelo = textField_1.getText();
-					Fachada.cadastrarCarro(placa, modelo);
-					label.setText("carro criado: "+ placa);
+					String nome = textField_1.getText();
+					Fachada.cadastrarPessoa(nome);
+					label.setText("pessoa criado: "+ nome);
 					listagem();
 				}
 				catch(Exception ex) {
@@ -165,7 +150,7 @@ public class TelaCarro {
 			}
 		});
 		button_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		button_1.setBounds(525, 265, 153, 23);
+		button_1.setBounds(281, 265, 153, 23);
 		frame.getContentPane().add(button_1);
 
 		button = new JButton("Listar");
@@ -178,16 +163,16 @@ public class TelaCarro {
 		button.setBounds(308, 11, 89, 23);
 		frame.getContentPane().add(button);
 
-		label_3 = new JLabel("modelo:");
+		label_3 = new JLabel("nome:");
 		label_3.setHorizontalAlignment(SwingConstants.LEFT);
 		label_3.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		label_3.setBounds(281, 269, 63, 14);
+		label_3.setBounds(45, 269, 63, 14);
 		frame.getContentPane().add(label_3);
 
 		textField_1 = new JTextField();
 		textField_1.setFont(new Font("Dialog", Font.PLAIN, 12));
 		textField_1.setColumns(10);
-		textField_1.setBounds(336, 264, 168, 20);
+		textField_1.setBounds(92, 266, 168, 20);
 		frame.getContentPane().add(textField_1);
 
 		button_2 = new JButton("Apagar selecionado");
@@ -196,10 +181,9 @@ public class TelaCarro {
 				try{
 					if (table.getSelectedRow() >= 0){	
 						label.setText("nao implementado " );
-						String placa = (String) table.getValueAt( table.getSelectedRow(), 0);
-
-						Fachada.excluirCarro(placa);
-						label.setText("carro apagado" );
+						String nome = (String) table.getValueAt( table.getSelectedRow(), 1);
+						Fachada.excluirPessoa(nome);
+						label.setText("Pessoa apagado" );
 						listagem();
 					}
 					else
@@ -214,25 +198,24 @@ public class TelaCarro {
 		button_2.setBounds(281, 213, 171, 23);
 		frame.getContentPane().add(button_2);
 
-		button_3 = new JButton("exibir alugueis");
+		button_3 = new JButton("exibir reunioes");
 		button_3.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		button_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try{
 					if (table.getSelectedRow() >= 0){	
-						String placa = (String) table.getValueAt( table.getSelectedRow(), 0);
-						Carro car = Fachada.localizarCarro(placa);
+						String nome = (String) table.getValueAt( table.getSelectedRow(), 1);
+						Pessoa pessoa = Fachada.localizarPessoa(nome);
 
-						if(car != null) {
+						if(pessoa !=  null) {
 							String texto="";
-							if(car.getAlugueis().isEmpty())
-								texto = "nao possui alugueis";
+							if(pessoa.getReunioes().isEmpty())
+								texto = "nao possui reunioes";
 							else
-								for (Aluguel a : car.getAlugueis()) {
-									texto = texto + a.getDatainicio()+ "-" + a.getDatafim() + "-" +a.getCliente().getNome()+ "\n";
-								}
+								for (Reuniao a : pessoa.getReunioes()) 
+									texto = texto + a.getId()+ "-" + a.getData()  + "\n";
 
-							JOptionPane.showMessageDialog(frame, texto, "alugueis", 1);
+							JOptionPane.showMessageDialog(frame, texto, "reunioes", 1);
 						}
 					}
 				}
@@ -241,25 +224,24 @@ public class TelaCarro {
 				}
 			}
 		});
-		button_3.setBounds(47, 215, 134, 23);
+		button_3.setBounds(96, 214, 134, 23);
 		frame.getContentPane().add(button_3);
 	}
 
 	public void listagem() {
 		try{
-			List<Carro> lista = Fachada.listarCarros();
+			List<Pessoa> lista = Fachada.listarPessoas();
 
 			// model armazena todas as linhas e colunas do table
 			DefaultTableModel model = new DefaultTableModel();
 
 			//adicionar colunas no model
-			model.addColumn("placa");
-			model.addColumn("modelo");
-			model.addColumn("alugado");
+			model.addColumn("nomes");
+			model.addColumn("nome");
 
 			//adicionar linhas no model
-			for(Carro car : lista) {
-				model.addRow(new Object[]{car.getPlaca(), car.getModelo(), car.isAlugado()} );
+			for(Pessoa pessoa : lista) {
+				model.addRow(new Object[]{ pessoa.getNome()} );
 			}
 
 			//atualizar model no table (visualizacao)
@@ -271,6 +253,4 @@ public class TelaCarro {
 			label.setText(erro.getMessage());
 		}
 	}
-
-
 }
