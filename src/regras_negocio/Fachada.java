@@ -53,6 +53,20 @@ public class Fachada {
 		return reuniao;
 	}
 
+	public static Pessoa cadastrarPessoa(String nome) throws Exception{
+		DAO.begin();
+		Pessoa pessoaSendoCadastrada = daopessoa.read(nome);
+		if(pessoaSendoCadastrada!= null){
+			throw new Exception("Pessoa já foi cadastrada!")
+		}
+		pessoaSendoCadastrada = new Pessoa(nome);
+		daopessoa.create(pessoaSendoCadastrada);
+		DAO.commit();
+		return pessoaSendoCadastrada;
+	}
+
+
+
 	public static Aluguel alugarCarro(String cpf, String placa, double diaria, String data1, String data2) throws Exception{
 		DAO.begin();
 		Carro car =  daocarro.read(placa);
