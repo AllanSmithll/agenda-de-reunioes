@@ -1,7 +1,7 @@
 /*
  * Usuario class
  * @authors Allan Amancio e Marcio Jose
- * Data: 26/09/2023
+ * Data: 29/09/2023
  */
 
 package models;

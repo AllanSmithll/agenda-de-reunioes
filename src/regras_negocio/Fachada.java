@@ -157,5 +157,26 @@ public class Fachada {
 		List<Usuario> resultados =  daousuario.readAll();
 		DAO.commit();
 		return resultados;
-	} 
+	}
+	
+	public static List<Reuniao> listarReunioesNaData(String data){	
+		DAO.begin();
+		List<Reuniao> resultados =  daoreuniao.listarReunioesNaData(data);
+		DAO.commit();
+		return resultados;
+	}
+
+	public static List<Carro>  carrosNAlugueis(int n){	
+		DAO.begin();
+		List<Carro> resultados =  daocarro.carrosNAlugueis(n);
+		DAO.commit();
+		return resultados;
+	}
+	
+	public static List<Aluguel> alugueisFinalizados(){	
+		DAO.begin();
+		List<Aluguel> resultados =  daoaluguel.alugueisFinalizados();
+		DAO.commit();
+		return resultados;
+	}
 }

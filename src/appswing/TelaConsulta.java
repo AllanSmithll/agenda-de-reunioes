@@ -32,8 +32,8 @@ import javax.swing.table.DefaultTableModel;
 
 import com.db4o.ObjectContainer;
 
-import modelo.Aluguel;
-import modelo.Carro;
+import models.Pessoa;
+import models.Reuniao;
 import regras_negocio.Fachada;
 
 public class TelaConsulta {
@@ -135,21 +135,21 @@ public class TelaConsulta {
 					label_4.setText("consulta nao selecionada");
 				else
 					switch(index) {
-					case 0: 
-						List<Aluguel> resultado1 = Fachada.alugueisFinalizados();
-						listagemAluguel(resultado1);
-						break;
-					case 1: 
-						String modelo = JOptionPane.showInputDialog("digite o modelo");
-						List<Aluguel> resultado2 = Fachada.alugueisModelo(modelo);
-						listagemAluguel(resultado2);
-						break;
-					case 2: 
-						String n = JOptionPane.showInputDialog("digite N");
-						int numero = Integer.parseInt(n);
-						List<Carro> resultado3 = Fachada.carrosNAlugueis(numero);
-						listagemCarro(resultado3);
-						break;
+//					case 0: 
+//						List<Reuniao> resultado1 = Fachada.listarReunioesNaData();
+//						li(resultado1);
+//						break;
+//					case 1: 
+//						String modelo = JOptionPane.showInputDialog("digite o modelo");
+//						List<Aluguel> resultado2 = Fachada.alugueisModelo(modelo);
+//						listagemAluguel(resultado2);
+//						break;
+//					case 2: 
+//						String n = JOptionPane.showInputDialog("digite N");
+//						int numero = Integer.parseInt(n);
+//						List<Carro> resultado3 = Fachada.carrosNAlugueis(numero);
+//						listagemCarro(resultado3);
+//						break;
 
 					}
 
@@ -160,61 +160,61 @@ public class TelaConsulta {
 
 		comboBox = new JComboBox();
 		comboBox.setToolTipText("selecione a consulta");
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"alugueis finalizados", "alugueis de um determinado modelo de carro", "carros que possuem N alugueis"}));
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Reunioes em determinada data", "alugueis de um determinado modelo de carro", "carros que possuem N alugueis"}));
 		comboBox.setBounds(21, 10, 513, 22);
 		frame.getContentPane().add(comboBox);
 	}
 
-	public void listagemAluguel(List<Aluguel> lista) {
-		try{
-			// o model armazena todas as linhas e colunas do table
-			DefaultTableModel model = new DefaultTableModel();
-
-			//adicionar colunas no model
-			model.addColumn("id");
-			model.addColumn("nome");
-			model.addColumn("placa");
-			model.addColumn("data inicial");
-			model.addColumn("data final");
-			model.addColumn("total a pagar");
-			model.addColumn("finalizado");
-
-			//adicionar linhas no model
-			for(Aluguel aluguel : lista) {
-				model.addRow(new Object[]{aluguel.getId(), aluguel.getCliente().getNome(), aluguel.getCarro().getPlaca(), aluguel.getDatainicio(), aluguel.getDatafim(), aluguel.getValor(), aluguel.isFinalizado()});
-			}
-			//atualizar model no table (visualizacao)
-			table.setModel(model);
-
-			label_4.setText("resultados: "+lista.size()+ " objetos");
-		}
-		catch(Exception erro){
-			label.setText(erro.getMessage());
-		}
-	}
+//	public void listagemReuniao(List<Aluguel> lista) {
+//		try{
+//			// o model armazena todas as linhas e colunas do table
+//			DefaultTableModel model = new DefaultTableModel();
+//
+//			//adicionar colunas no model
+//			model.addColumn("id");
+//			model.addColumn("nome");
+//			model.addColumn("placa");
+//			model.addColumn("data inicial");
+//			model.addColumn("data final");
+//			model.addColumn("total a pagar");
+//			model.addColumn("finalizado");
+//
+//			//adicionar linhas no model
+//			for(Aluguel aluguel : lista) {
+//				model.addRow(new Object[]{aluguel.getId(), aluguel.getCliente().getNome(), aluguel.getCarro().getPlaca(), aluguel.getDatainicio(), aluguel.getDatafim(), aluguel.getValor(), aluguel.isFinalizado()});
+//			}
+//			//atualizar model no table (visualizacao)
+//			table.setModel(model);
+//
+//			label_4.setText("resultados: "+lista.size()+ " objetos");
+//		}
+//		catch(Exception erro){
+//			label.setText(erro.getMessage());
+//		}
+//	}
 	
-	public void listagemCarro(List<Carro> lista) {
-		try{
-			// model armazena todas as linhas e colunas do table
-			DefaultTableModel model = new DefaultTableModel();
-
-			//adicionar colunas no model
-			model.addColumn("placa");
-			model.addColumn("modelo");
-			model.addColumn("alugado");
-
-			//adicionar linhas no model
-			for(Carro car : lista) {
-				model.addRow(new Object[]{car.getPlaca(), car.getModelo(), car.isAlugado()} );
-			}
-			//atualizar model no table (visualizacao)
-			table.setModel(model);
-
-			label_4.setText("resultados: "+lista.size()+ " objetos");
-		}
-		catch(Exception erro){
-			label.setText(erro.getMessage());
-		}
-	}
+//	public void listagemCarro(List<Reuniao> lista) {
+//		try{
+//			// model armazena todas as linhas e colunas do table
+//			DefaultTableModel model = new DefaultTableModel();
+//
+//			//adicionar colunas no model
+//			model.addColumn("placa");
+//			model.addColumn("modelo");
+//			model.addColumn("alugado");
+//
+//			//adicionar linhas no model
+//			for(Reuniao car : lista) {
+//				model.addRow(new Object[]{car.getPlaca(), car.getModelo(), car.isAlugado()} );
+//			}
+//			//atualizar model no table (visualizacao)
+//			table.setModel(model);
+//
+//			label_4.setText("resultados: "+lista.size()+ " objetos");
+//		}
+//		catch(Exception erro){
+//			label.setText(erro.getMessage());
+//		}
+//	}
 
 }
