@@ -2,6 +2,7 @@
 .project
 .classpath
 .idea
+banco.db4o
 
 # Compiled class file
 *.class
