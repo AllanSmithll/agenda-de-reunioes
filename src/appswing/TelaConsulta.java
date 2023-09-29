@@ -32,8 +32,11 @@ import javax.swing.table.DefaultTableModel;
 
 import com.db4o.ObjectContainer;
 
+<<<<<<< Updated upstream
 import models.Pessoa;
 import models.Reuniao;
+=======
+>>>>>>> Stashed changes
 import regras_negocio.Fachada;
 
 public class TelaConsulta {

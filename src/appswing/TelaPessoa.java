@@ -32,8 +32,8 @@ import javax.swing.table.DefaultTableModel;
 
 import com.db4o.ObjectContainer;
 
-import models.Pessoa;
-import models.Reuniao;
+import modelo.Pessoa;
+import modelo.Reuniao;
 import regras_negocio.Fachada;
 
 public class TelaPessoa {
@@ -180,7 +180,13 @@ public class TelaPessoa {
 			public void actionPerformed(ActionEvent e) {
 				try{
 					if (table.getSelectedRow() >= 0){	
+<<<<<<< Updated upstream
 						String nome = (String) table.getValueAt( table.getSelectedRow(), 1);
+=======
+						label.setText("nao implementado " ); 
+						String nome = (String) table.getValueAt( table.getSelectedRow(), 0);
+						System.out.println("excluidno " +nome);
+>>>>>>> Stashed changes
 						Fachada.excluirPessoa(nome);
 						label.setText("Pessoa apagada" );
 						listagem();
@@ -203,7 +209,7 @@ public class TelaPessoa {
 			public void actionPerformed(ActionEvent e) {
 				try{
 					if (table.getSelectedRow() >= 0){	
-						String nome = (String) table.getValueAt( table.getSelectedRow(), 1);
+						String nome = (String) table.getValueAt( table.getSelectedRow(), 0);
 						Pessoa pessoa = Fachada.localizarPessoa(nome);
 
 						if(pessoa !=  null) {
@@ -214,7 +220,7 @@ public class TelaPessoa {
 								for (Reuniao a : pessoa.getReunioes()) 
 									texto = texto + a.getId()+ "-" + a.getData()  + "\n";
 
-							JOptionPane.showMessageDialog(frame, texto, "reunioes", 1);
+							JOptionPane.showMessageDialog(frame, texto, "reunioes", 0);
 						}
 					}
 				}
@@ -236,7 +242,12 @@ public class TelaPessoa {
 
 			//adicionar colunas no model
 			model.addColumn("nome");
+<<<<<<< Updated upstream
 			model.addColumn("reunioes");
+=======
+			
+
+>>>>>>> Stashed changes
 
 			//adicionar linhas no model
 			for(Pessoa pessoa : lista) {

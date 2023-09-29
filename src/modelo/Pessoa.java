@@ -2,7 +2,7 @@
   * Pessoa class
  * @authors Allan Amancio e Marcio Jose
  */
-package models;
+package modelo;
 
 import java.util.List;
 import java.util.ArrayList;

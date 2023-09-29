@@ -10,7 +10,7 @@ import java.util.List;
 
 import com.db4o.query.Query;
 
-import models.Usuario;
+import modelo.Usuario;
 
 public class DAOUsuario extends DAO<Usuario>{
 

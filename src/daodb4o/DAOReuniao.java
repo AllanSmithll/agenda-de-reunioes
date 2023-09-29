@@ -10,8 +10,8 @@ import java.util.List;
 
 import com.db4o.query.Query;
 
-import models.Pessoa;
-import models.Reuniao;
+import modelo.Pessoa;
+import modelo.Reuniao;
 
 public class DAOReuniao extends DAO<Reuniao>{
 
@@ -43,10 +43,10 @@ public class DAOReuniao extends DAO<Reuniao>{
 	}
 	
 	// Vai pra tela como "Reunioes que tenham determinada pessoa"
-	public List<Reuniao> listarReunioesComAPessoa(Pessoa p){
+	public List<Reuniao> listarReunioesComAPessoa(String nome){
 		Query q = manager.query();
 		q.constrain(Reuniao.class);
-		q.descend("listaDePessoas").descend("nome").constrain(p.getNome());
+		q.descend("listaDePessoas").descend("nome").constrain(nome);
 		return q.execute();
 	}
 }

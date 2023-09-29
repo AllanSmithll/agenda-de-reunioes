@@ -32,8 +32,13 @@ import javax.swing.table.DefaultTableModel;
 
 import com.db4o.ObjectContainer;
 
+<<<<<<< Updated upstream
 import models.Pessoa;
 import models.Reuniao;
+=======
+import modelo.Pessoa;
+import modelo.Reuniao;
+>>>>>>> Stashed changes
 import regras_negocio.Fachada;
 
 public class TelaReuniao {
@@ -154,7 +159,7 @@ public class TelaReuniao {
 					String data = textField.getText();
 			
 					Fachada.cadastrarReuniao(data);
-					label.setText("reuniao criado: "+ data);
+					label.setText("reuniao criada: "+ data);
 					listagem();
 				}
 				catch(Exception ex) {
@@ -163,7 +168,7 @@ public class TelaReuniao {
 			}
 		});
 		button_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		button_1.setBounds(281, 265, 153, 23);
+		button_1.setBounds(78, 300, 153, 23);
 		frame.getContentPane().add(button_1);
 
 		button = new JButton("Listar");
@@ -195,7 +200,7 @@ public class TelaReuniao {
 			}
 		});
 		button_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		button_2.setBounds(281, 213, 171, 23);
+		button_2.setBounds(279, 215, 146, 23);
 		frame.getContentPane().add(button_2);
 
 		btnExibirPessoas = new JButton("exibir pessoas");
@@ -210,7 +215,7 @@ public class TelaReuniao {
 						if(reuniao != null) {
 							String texto="";
 							if(reuniao.getListaDePessoas().isEmpty())
-								texto = "nao possui alugueis";
+								texto = "nao possui membros";
 							else
 								for (Pessoa a : reuniao.getListaDePessoas()) {
 									texto = texto + a.getNome() + "\n";
@@ -225,8 +230,19 @@ public class TelaReuniao {
 				}
 			}
 		});
-		btnExibirPessoas.setBounds(47, 215, 134, 23);
+		btnExibirPessoas.setBounds(279, 287, 134, 23);
 		frame.getContentPane().add(btnExibirPessoas);
+		
+		JButton btnNewButton = new JButton("Adicionar membro");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				
+			}
+			
+		});
+		btnNewButton.setBounds(279, 249, 134, 23);
+		frame.getContentPane().add(btnNewButton);
 	}
 
 	public void listagem() {
@@ -239,7 +255,7 @@ public class TelaReuniao {
 			//adicionar colunas no model
 			model.addColumn("ID");
 			model.addColumn("Data");
-			model.addColumn("alugado");
+		
 
 			//adicionar linhas no model
 			for(Reuniao reuniao : lista) {
@@ -255,6 +271,4 @@ public class TelaReuniao {
 			label.setText(erro.getMessage());
 		}
 	}
-
-
 }
