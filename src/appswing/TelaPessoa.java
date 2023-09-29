@@ -180,10 +180,9 @@ public class TelaPessoa {
 			public void actionPerformed(ActionEvent e) {
 				try{
 					if (table.getSelectedRow() >= 0){	
-						label.setText("nao implementado " );
 						String nome = (String) table.getValueAt( table.getSelectedRow(), 1);
 						Fachada.excluirPessoa(nome);
-						label.setText("Pessoa apagado" );
+						label.setText("Pessoa apagada" );
 						listagem();
 					}
 					else
@@ -236,8 +235,8 @@ public class TelaPessoa {
 			DefaultTableModel model = new DefaultTableModel();
 
 			//adicionar colunas no model
-			model.addColumn("nomes");
 			model.addColumn("nome");
+			model.addColumn("reunioes");
 
 			//adicionar linhas no model
 			for(Pessoa pessoa : lista) {

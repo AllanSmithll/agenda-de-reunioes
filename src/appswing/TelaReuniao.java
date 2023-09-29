@@ -32,8 +32,6 @@ import javax.swing.table.DefaultTableModel;
 
 import com.db4o.ObjectContainer;
 
-import modelo.Aluguel;
-import modelo.Carro;
 import models.Pessoa;
 import models.Reuniao;
 import regras_negocio.Fachada;
@@ -183,9 +181,7 @@ public class TelaReuniao {
 			public void actionPerformed(ActionEvent e) {
 				try{
 					if (table.getSelectedRow() >= 0){	
-						label.setText("nao implementado " );
 						int id = (int) table.getValueAt( table.getSelectedRow(), 0);
-
 						Fachada.excluirReuniao(id);
 						label.setText("reuniao apagado" );
 						listagem();

@@ -63,7 +63,6 @@ public class TelaLogin {
 				if(Fachada.listarUsuarios().isEmpty()) {
 					try {
 						Fachada.cadastrarUsuario("fausto", "1234");
-						label_2.setText("usuario 'fausto' cadastrado");
 					}
 					catch(Exception ex) {
 						label_2.setText("nao conseguiu criar usuario");

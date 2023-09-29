@@ -60,6 +60,7 @@ public class Cadastrar {
 	       r3.adicionarPessoa(p3);
 	       r4.adicionarPessoa(p2);
 	       r4.adicionarPessoa(p3);
+	       r5.adicionarPessoa(p1);
 	       r5.adicionarPessoa(p3);
 	       manager.store(r1);
 	       manager.store(r2);
