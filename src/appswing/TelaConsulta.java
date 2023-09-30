@@ -32,11 +32,8 @@ import javax.swing.table.DefaultTableModel;
 
 import com.db4o.ObjectContainer;
 
-<<<<<<< Updated upstream
 import models.Pessoa;
 import models.Reuniao;
-=======
->>>>>>> Stashed changes
 import regras_negocio.Fachada;
 
 public class TelaConsulta {
@@ -90,6 +87,7 @@ public class TelaConsulta {
 			public void windowOpened(WindowEvent e) {
 				Fachada.inicializar();
 			}
+
 			@Override
 			public void windowClosing(WindowEvent e) {
 				Fachada.finalizar();
@@ -104,7 +102,7 @@ public class TelaConsulta {
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				label_4.setText("selecionado="+ (String) table.getValueAt( table.getSelectedRow(), 0));
+				label_4.setText("selecionado=" + (String) table.getValueAt(table.getSelectedRow(), 0));
 			}
 		});
 		table.setGridColor(Color.BLACK);
@@ -120,7 +118,7 @@ public class TelaConsulta {
 		table.setShowGrid(true);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
-		label = new JLabel("");		//label de mensagem
+		label = new JLabel(""); // label de mensagem
 		label.setForeground(Color.BLUE);
 		label.setBounds(21, 321, 688, 14);
 		frame.getContentPane().add(label);
@@ -134,28 +132,28 @@ public class TelaConsulta {
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int index = comboBox.getSelectedIndex();
-				if(index<0)
+				if (index < 0)
 					label_4.setText("consulta nao selecionada");
-				else
-					switch(index) {
-//					case 0: 
-//						List<Reuniao> resultado1 = Fachada.listarReunioesNaData();
-//						li(resultado1);
-//						break;
-//					case 1: 
-//						String modelo = JOptionPane.showInputDialog("digite o modelo");
-//						List<Aluguel> resultado2 = Fachada.alugueisModelo(modelo);
-//						listagemAluguel(resultado2);
-//						break;
-//					case 2: 
-//						String n = JOptionPane.showInputDialog("digite N");
-//						int numero = Integer.parseInt(n);
-//						List<Carro> resultado3 = Fachada.carrosNAlugueis(numero);
-//						listagemCarro(resultado3);
-//						break;
-
+				else {
+					switch (index) {
+					case 0:
+						String data = JOptionPane.showInputDialog("digite a data");
+						List<Reuniao> resultado1 = Fachada.listarReunioesNaData(data);
+						listagemReuniao(resultado1);
+						break;
+					case 1:
+						String nome = JOptionPane.showInputDialog("digite o nome");
+						List<Reuniao> resultado2 = Fachada.listarReunioesComAPessoa(nome);
+						listagemReuniao(resultado2);
+						break;
+					case 2:
+						String n = JOptionPane.showInputDialog("digite N");
+						int numero = Integer.parseInt(n);
+						List<Pessoa> resultado3 = Fachada.pessoasEmMaisDeNReunioes(numero);
+						listagemPessoa(resultado3);
+						break;
 					}
-
+				}
 			}
 		});
 		button.setBounds(606, 10, 89, 23);
@@ -163,61 +161,59 @@ public class TelaConsulta {
 
 		comboBox = new JComboBox();
 		comboBox.setToolTipText("selecione a consulta");
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Reunioes em determinada data", "alugueis de um determinado modelo de carro", "carros que possuem N alugueis"}));
+		comboBox.setModel(new DefaultComboBoxModel(new String[] { "Reunioes em determinada data",
+				"Reunioes que tenham determinada pessoa", "Pessoas que estao em mais de N reunioes" }));
 		comboBox.setBounds(21, 10, 513, 22);
 		frame.getContentPane().add(comboBox);
 	}
 
-//	public void listagemReuniao(List<Aluguel> lista) {
-//		try{
-//			// o model armazena todas as linhas e colunas do table
-//			DefaultTableModel model = new DefaultTableModel();
-//
-//			//adicionar colunas no model
-//			model.addColumn("id");
-//			model.addColumn("nome");
-//			model.addColumn("placa");
-//			model.addColumn("data inicial");
-//			model.addColumn("data final");
-//			model.addColumn("total a pagar");
-//			model.addColumn("finalizado");
-//
-//			//adicionar linhas no model
-//			for(Aluguel aluguel : lista) {
-//				model.addRow(new Object[]{aluguel.getId(), aluguel.getCliente().getNome(), aluguel.getCarro().getPlaca(), aluguel.getDatainicio(), aluguel.getDatafim(), aluguel.getValor(), aluguel.isFinalizado()});
-//			}
-//			//atualizar model no table (visualizacao)
-//			table.setModel(model);
-//
-//			label_4.setText("resultados: "+lista.size()+ " objetos");
-//		}
-//		catch(Exception erro){
-//			label.setText(erro.getMessage());
-//		}
-//	}
-	
-//	public void listagemCarro(List<Reuniao> lista) {
-//		try{
-//			// model armazena todas as linhas e colunas do table
-//			DefaultTableModel model = new DefaultTableModel();
-//
-//			//adicionar colunas no model
-//			model.addColumn("placa");
-//			model.addColumn("modelo");
-//			model.addColumn("alugado");
-//
-//			//adicionar linhas no model
-//			for(Reuniao car : lista) {
-//				model.addRow(new Object[]{car.getPlaca(), car.getModelo(), car.isAlugado()} );
-//			}
-//			//atualizar model no table (visualizacao)
-//			table.setModel(model);
-//
-//			label_4.setText("resultados: "+lista.size()+ " objetos");
-//		}
-//		catch(Exception erro){
-//			label.setText(erro.getMessage());
-//		}
-//	}
+	public void listagemReuniao(List<Reuniao> lista) {
+		try {
+			// o model armazena todas as linhas e colunas do table
+			DefaultTableModel model = new DefaultTableModel();
 
+			model.addColumn("id");
+			model.addColumn("data");
+			model.addColumn("Lista de pessoas");
+			for (Reuniao reu : lista) {
+				if (!reu.getListaDePessoas().isEmpty()) {
+					List<Pessoa> pessoasDaReuniao = reu.getListaDePessoas();
+					StringBuilder sb = new StringBuilder();
+					for (Pessoa p : pessoasDaReuniao) {
+						sb.append(p.getNome() + " ");
+					}
+					model.addRow(new Object[] { reu.getId(), reu.getData(), sb });
+				}
+			}
+			table.setModel(model);
+			label_4.setText("resultados: " + lista.size() + " objetos");
+		} catch (Exception erro) {
+			label.setText(erro.getMessage());
+		}
+	}
+
+	public void listagemPessoa(List<Pessoa> lista) {
+		try {
+			// model armazena todas as linhas e colunas do table
+			DefaultTableModel model = new DefaultTableModel();
+
+			model.addColumn("nome");
+			model.addColumn("reunioes");
+			for (Pessoa p : lista) {
+				if (!p.getReunioes().isEmpty()) {
+					List<Reuniao> reunioes = p.getReunioes();
+					StringBuilder sb = new StringBuilder();
+//					sb.append()
+//					for (Reuniao r : reunioes) {
+//						sb.append(p.getNome() + " ");
+//					}
+//					model.addRow(new Object[] { sb, r.getId()});
+				}
+			}
+			table.setModel(model);
+			label_4.setText("resultados: " + lista.size() + " objetos");
+		} catch (Exception erro) {
+			label.setText(erro.getMessage());
+		}
+	}
 }

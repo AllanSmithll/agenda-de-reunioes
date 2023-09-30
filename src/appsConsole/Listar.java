@@ -9,8 +9,8 @@ import java.util.List;
 import com.db4o.ObjectContainer;
 import com.db4o.query.Query;
 
-import modelo.Pessoa;
-import modelo.Reuniao;
+import models.Pessoa;
+import models.Reuniao;
 
  class Listar {
 	protected ObjectContainer manager;

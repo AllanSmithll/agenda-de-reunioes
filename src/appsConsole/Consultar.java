@@ -7,8 +7,8 @@ import com.db4o.query.Candidate;
 import com.db4o.query.Evaluation;
 import com.db4o.query.Query;
 
-import modelo.Pessoa;
-import modelo.Reuniao;
+import models.Pessoa;
+import models.Reuniao;
 
 public class Consultar {
     protected ObjectContainer manager;

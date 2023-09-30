@@ -29,7 +29,7 @@ public class DAOPessoa extends DAO<Pessoa>{
 	}
 	
 	// Vai pra tela como "Pessoas que estao em mais de N reunioes"
-	public List<Reuniao> listarPessoasEmMaisDeNReunioes(int quantidade){
+	public List<Pessoa> listarPessoasEmMaisDeNReunioes(int quantidade){
 		Query q;
 		q = manager.query();
 		q.constrain(Pessoa.class);

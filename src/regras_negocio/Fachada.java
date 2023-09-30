@@ -33,6 +33,7 @@ public class Fachada {
 	public static void finalizar() {
 		DAO.close();
 	}
+
 	// ------------------Reuniao------------------------------------
 	public static Reuniao cadastrarReuniao(String data) throws Exception {
 		DAO.begin();
@@ -59,10 +60,10 @@ public class Fachada {
 	public static void excluirReuniao(int id) throws Exception {
 		DAO.begin();
 		Reuniao reuniaoSendoExcluida = daoreuniao.read(id);
-		if(reuniaoSendoExcluida == null) {
+		if (reuniaoSendoExcluida == null) {
 			throw new Exception("Reuniao ja excluida do nosso banco de dados!");
 		}
-		for(Pessoa pessoa : reuniaoSendoExcluida.getListaDePessoas()) {
+		for (Pessoa pessoa : reuniaoSendoExcluida.getListaDePessoas()) {
 			pessoa.removerReuniao(reuniaoSendoExcluida);
 			reuniaoSendoExcluida.removerPessoa(pessoa);
 			daopessoa.update(pessoa);
@@ -70,14 +71,15 @@ public class Fachada {
 		daoreuniao.delete(reuniaoSendoExcluida);
 		DAO.commit();
 	}
-	
-	public static List<Reuniao>  listarReunioes(){
+
+	public static List<Reuniao> listarReunioes() {
 		DAO.begin();
-		List<Reuniao> resultados =  daoreuniao.readAll();
+		List<Reuniao> resultados = daoreuniao.readAll();
 		DAO.commit();
 		return resultados;
-	} 
-	public static Reuniao localizarReuniao(int id){
+	}
+
+	public static Reuniao localizarReuniao(int id) {
 		return daoreuniao.read(id);
 	}
 
@@ -94,7 +96,7 @@ public class Fachada {
 		pessoaSendoCadastrada = new Pessoa(nome);
 		try {
 			daopessoa.create(pessoaSendoCadastrada);
-		} catch(Exception e) {
+		} catch (Exception e) {
 			throw new Exception("Erro ao cadastrar pessoa: " + e.getMessage());
 		}
 		DAO.commit();
@@ -117,18 +119,17 @@ public class Fachada {
 		DAO.commit();
 
 	}
-	
-	public static List<Pessoa>  listarPessoas(){
+
+	public static List<Pessoa> listarPessoas() {
 		DAO.begin();
-		List<Pessoa> resultados =  daopessoa.readAll();
+		List<Pessoa> resultados = daopessoa.readAll();
 		DAO.commit();
 		return resultados;
-	} 
-	
-	public static Pessoa localizarPessoa(String nome){
-		return daopessoa.read(nome);
 	}
 
+	public static Pessoa localizarPessoa(String nome) {
+		return daopessoa.read(nome);
+	}
 
 	// ------------------Usuario------------------------------------
 	public static Usuario cadastrarUsuario(String nome, String senha) throws Exception {
@@ -151,20 +152,32 @@ public class Fachada {
 			return null;
 		return usu;
 	}
-	
-	public static List<Usuario>  listarUsuarios(){
+
+	public static List<Usuario> listarUsuarios() {
 		DAO.begin();
-		List<Usuario> resultados =  daousuario.readAll();
+		List<Usuario> resultados = daousuario.readAll();
 		return resultados;
 	}
 	
-	public static List<Reuniao> listarReunioesNaData(String data){	
+	// ------------------Consultas------------------------------------
+	public static List<Reuniao> listarReunioesNaData(String data) {
 		DAO.begin();
-		List<Reuniao> resultados =  daoreuniao.listarReunioesNaData(data);
+		List<Reuniao> resultados = daoreuniao.listarReunioesNaData(data);
 		DAO.commit();
 		return resultados;
 	}
 
-
+	public static List<Reuniao> listarReunioesComAPessoa(String nome) {
+		DAO.begin();
+		List<Reuniao> resultados = daoreuniao.listarReunioesComAPessoa(nome);
+		DAO.commit();
+		return resultados;
 	}
-
+	
+	public static List<Pessoa> pessoasEmMaisDeNReunioes(int numero){	
+		DAO.begin();
+		List<Pessoa> resultados = daopessoa.listarPessoasEmMaisDeNReunioes(numero);
+		DAO.commit();
+		return resultados;
+	}
+}
