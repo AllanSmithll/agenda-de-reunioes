@@ -174,9 +174,9 @@ public class Fachada {
 		return resultados;
 	}
 	
-	public static List<Pessoa> pessoasEmMaisDeNReunioes(int numero){	
+	public static List<Pessoa> pessoasEmMaisDeNReunioes(int quantidade){	
 		DAO.begin();
-		List<Pessoa> resultados = daopessoa.listarPessoasEmMaisDeNReunioes(numero);
+		List<Pessoa> resultados = daopessoa.listarPessoasEmMaisDeNReunioes(quantidade);
 		DAO.commit();
 		return resultados;
 	}

@@ -7,12 +7,12 @@
 
 package daodb4o;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.db4o.query.Query;
 
 import models.Pessoa;
-import models.Reuniao;
 
 public class DAOPessoa extends DAO<Pessoa>{
 
@@ -28,13 +28,19 @@ public class DAOPessoa extends DAO<Pessoa>{
 			return null;
 	}
 	
-	// Vai pra tela como "Pessoas que estao em mais de N reunioes"
-	public List<Pessoa> listarPessoasEmMaisDeNReunioes(int quantidade){
-		Query q;
-		q = manager.query();
-		q.constrain(Pessoa.class);
-		q.descend("listaDeReunioes").constrain(quantidade).greater();
-		return q.execute();
+	public List<Pessoa> listarPessoasEmMaisDeNReunioes(int quantidade) {
+	    List<Pessoa> pessoasComMaisDeNReunioes = new ArrayList<>();
+
+	    Query q = manager.query();
+	    q.constrain(Pessoa.class);
+	    List<Pessoa> resultadoConsulta = q.execute();
+	    for (Pessoa pessoa : resultadoConsulta) {
+	        int numeroReunioes = pessoa.getReunioes().size();
+	        if (numeroReunioes > quantidade) {
+	            pessoasComMaisDeNReunioes.add(pessoa);
+	        }
+	    }
+	    return pessoasComMaisDeNReunioes;
 	}
 }
 

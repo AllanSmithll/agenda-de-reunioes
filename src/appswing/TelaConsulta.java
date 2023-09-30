@@ -203,11 +203,10 @@ public class TelaConsulta {
 				if (!p.getReunioes().isEmpty()) {
 					List<Reuniao> reunioes = p.getReunioes();
 					StringBuilder sb = new StringBuilder();
-//					sb.append()
-//					for (Reuniao r : reunioes) {
-//						sb.append(p.getNome() + " ");
-//					}
-//					model.addRow(new Object[] { sb, r.getId()});
+					for (Reuniao r : reunioes) {
+						sb.append(r.getId()+" ");
+					}
+					model.addRow(new Object[] { p.getNome(), sb.toString() });
 				}
 			}
 			table.setModel(model);

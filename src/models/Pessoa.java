@@ -59,7 +59,6 @@ public class Pessoa {
                 }
             }
         }
-      
         return sb.toString();
     }
 }

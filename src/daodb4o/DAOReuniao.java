@@ -32,7 +32,6 @@ public class DAOReuniao extends DAO<Reuniao>{
 		manager.store( obj );
 	}
 	
-	// Vai pra tela como "Reunioes em determinada data" (se quiser outra forma, tambem serve)
 	public List<Reuniao> listarReunioesNaData(String data){
 		Query q;
 		q = manager.query();
@@ -41,7 +40,6 @@ public class DAOReuniao extends DAO<Reuniao>{
 		return q.execute();
 	}
 	
-	// Vai pra tela como "Reunioes que tenham determinada pessoa"
 	public List<Reuniao> listarReunioesComAPessoa(String nome){
 		Query q = manager.query();
 		q.constrain(Reuniao.class);
