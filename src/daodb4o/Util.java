@@ -13,8 +13,8 @@ import com.db4o.config.EmbeddedConfiguration;
 import com.db4o.cs.Db4oClientServer;
 import com.db4o.cs.config.ClientConfiguration;
 
-import modelo.Pessoa;
-import modelo.Reuniao;
+import models.Pessoa;
+import models.Reuniao;
 public class Util {
 	private static ObjectContainer manager=null;
 

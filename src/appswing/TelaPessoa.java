@@ -32,8 +32,8 @@ import javax.swing.table.DefaultTableModel;
 
 import com.db4o.ObjectContainer;
 
-import modelo.Pessoa;
-import modelo.Reuniao;
+import models.Pessoa;
+import models.Reuniao;
 import regras_negocio.Fachada;
 
 public class TelaPessoa {
@@ -180,13 +180,10 @@ public class TelaPessoa {
 			public void actionPerformed(ActionEvent e) {
 				try{
 					if (table.getSelectedRow() >= 0){	
-<<<<<<< Updated upstream
-						String nome = (String) table.getValueAt( table.getSelectedRow(), 1);
-=======
 						label.setText("nao implementado " ); 
 						String nome = (String) table.getValueAt( table.getSelectedRow(), 0);
 						System.out.println("excluidno " +nome);
->>>>>>> Stashed changes
+
 						Fachada.excluirPessoa(nome);
 						label.setText("Pessoa apagada" );
 						listagem();
@@ -242,12 +239,6 @@ public class TelaPessoa {
 
 			//adicionar colunas no model
 			model.addColumn("nome");
-<<<<<<< Updated upstream
-			model.addColumn("reunioes");
-=======
-			
-
->>>>>>> Stashed changes
 
 			//adicionar linhas no model
 			for(Pessoa pessoa : lista) {

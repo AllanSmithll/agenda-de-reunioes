@@ -32,13 +32,8 @@ import javax.swing.table.DefaultTableModel;
 
 import com.db4o.ObjectContainer;
 
-<<<<<<< Updated upstream
 import models.Pessoa;
 import models.Reuniao;
-=======
-import modelo.Pessoa;
-import modelo.Reuniao;
->>>>>>> Stashed changes
 import regras_negocio.Fachada;
 
 public class TelaReuniao {

@@ -13,9 +13,9 @@ import daodb4o.DAO;
 import daodb4o.DAOPessoa;
 import daodb4o.DAOReuniao;
 import daodb4o.DAOUsuario;
-import modelo.Pessoa;
-import modelo.Reuniao;
-import modelo.Usuario;
+import models.Pessoa;
+import models.Reuniao;
+import models.Usuario;
 
 public class Fachada {
 	private Fachada() {
@@ -105,11 +105,7 @@ public class Fachada {
 		DAO.begin();
 		Pessoa pessoaSendoExcluida = daopessoa.read(nome);
 		if (pessoaSendoExcluida == null) {
-<<<<<<< Updated upstream
-			throw new Exception("Pessoa ja foi excluida do nosso banco de dados!");
-=======
 			throw new Exception("Pessoa inexistente!");
->>>>>>> Stashed changes
 		}
 		// Removendo o relacionamento antes da exclusão
 		for (Reuniao reuniao : pessoaSendoExcluida.getReunioes()) {
@@ -159,7 +155,6 @@ public class Fachada {
 	public static List<Usuario>  listarUsuarios(){
 		DAO.begin();
 		List<Usuario> resultados =  daousuario.readAll();
-		DAO.commit();
 		return resultados;
 	}
 	
@@ -170,17 +165,6 @@ public class Fachada {
 		return resultados;
 	}
 
-	public static List<Carro>  carrosNAlugueis(int n){	
-		DAO.begin();
-		List<Carro> resultados =  daocarro.carrosNAlugueis(n);
-		DAO.commit();
-		return resultados;
+
 	}
-	
-	public static List<Aluguel> alugueisFinalizados(){	
-		DAO.begin();
-		List<Aluguel> resultados =  daoaluguel.alugueisFinalizados();
-		DAO.commit();
-		return resultados;
-	}
-}
+
