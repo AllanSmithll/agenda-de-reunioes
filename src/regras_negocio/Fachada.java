@@ -180,4 +180,21 @@ public class Fachada {
 		DAO.commit();
 		return resultados;
 	}
+	public static void agendarReuniao(String nomeDaPessoa, int IdReuniao) throws Exception {
+		DAO.begin();
+		Pessoa pessoa = Fachada.localizarPessoa(nomeDaPessoa);
+		Reuniao reuniao = Fachada.localizarReuniao(IdReuniao);
+		
+		if(pessoa == null) {
+			throw new Exception("pessoa não encontrada!");
+		}
+		
+		if(reuniao == null) {
+			throw new Exception("reunião não encontrada!");
+		}
+		
+		reuniao.adicionarPessoa(pessoa);
+		pessoa.adicionarReuniao(reuniao);
+		DAO.commit();	
+	}
 }
