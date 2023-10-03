@@ -18,6 +18,7 @@ import java.awt.event.WindowEvent;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -50,6 +51,7 @@ public class TelaReuniao {
 
 	private ObjectContainer manager;
 	private JButton btnExibirPessoas;
+	private JComboBox comboBox_1;
 
 	/**
 	 * Launch the application.
@@ -230,14 +232,57 @@ public class TelaReuniao {
 		
 		JButton btnNewButton = new JButton("Adicionar membro");
 		btnNewButton.addActionListener(new ActionListener() {
+			@SuppressWarnings("unchecked")
 			public void actionPerformed(ActionEvent e) {
 				
+			
+				JComboBox comboBox = new JComboBox<Object>();
+				comboBox.setBounds(486, 216, 161, 43);
+				frame.getContentPane().add(comboBox);
+				List<Pessoa> pessoas = Fachada.listarPessoas();
+				
+				for(Pessoa pessoa : pessoas) {
+					comboBox.addItem(pessoa.getNome());
+				}
+				
+				
+				JButton btnNewButton_1 = new JButton("Confirmar");
+				btnNewButton_1.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						
+						
+						try {
+							
+							if (table.getSelectedRow() >= 0){	
+								int idreuniao = (int) table.getValueAt( table.getSelectedRow(), 0);
+								Reuniao reuniao = Fachada.localizarReuniao(idreuniao);
+								int selectedIndex = comboBox.getSelectedIndex();
+								if (selectedIndex != -1) {
+								    String selectedValue = (String) comboBox.getItemAt(selectedIndex); // Obtém o valor selecionado com base no índice
+								     Fachada.agendarReuniao(selectedValue ,idreuniao); }
+								
+							}
+							
+						} catch (Exception e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					}
+				});
+				btnNewButton_1.setBounds(590, 287, 89, 23);
+				frame.getContentPane().add(btnNewButton_1);
+		
 				
 			}
 			
 		});
 		btnNewButton.setBounds(279, 249, 134, 23);
 		frame.getContentPane().add(btnNewButton);
+		
+		
+		
+		
+		
 	}
 
 	public void listagem() {
