@@ -263,9 +263,9 @@ public class TelaReuniao {
 								
 							}
 							
-						} catch (Exception e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
+						}  catch (Exception erro) {
+							
+							label.setText(erro.getMessage());
 						}
 					}
 				});
