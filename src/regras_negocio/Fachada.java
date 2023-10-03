@@ -195,6 +195,8 @@ public class Fachada {
 		
 		reuniao.adicionarPessoa(pessoa);
 		pessoa.adicionarReuniao(reuniao);
+		daoreuniao.update(reuniao);
+		daopessoa.update(pessoa);
 		DAO.commit();	
 	}
 }

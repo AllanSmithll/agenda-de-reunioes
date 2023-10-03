@@ -94,6 +94,7 @@ public class TelaReuniao {
 				Fachada.inicializar();
 				listagem();
 			}
+
 			@Override
 			public void windowClosing(WindowEvent e) {
 				Fachada.finalizar();
@@ -108,7 +109,7 @@ public class TelaReuniao {
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				label_4.setText("selecionado="+ (int) table.getValueAt( table.getSelectedRow(), 0));
+				label_4.setText("selecionado=" + (int) table.getValueAt(table.getSelectedRow(), 0));
 			}
 		});
 		table.setGridColor(Color.BLACK);
@@ -124,7 +125,7 @@ public class TelaReuniao {
 		table.setShowGrid(true);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
-		label = new JLabel("");		//label de mensagem
+		label = new JLabel(""); // label de mensagem
 		label.setForeground(Color.BLUE);
 		label.setBounds(21, 321, 688, 14);
 		frame.getContentPane().add(label);
@@ -136,7 +137,7 @@ public class TelaReuniao {
 		label_2 = new JLabel("data:");
 		label_2.setHorizontalAlignment(SwingConstants.LEFT);
 		label_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		label_2.setBounds(21, 269, 71, 14);
+		label_2.setBounds(31, 267, 43, 14);
 		frame.getContentPane().add(label_2);
 
 		textField = new JTextField();
@@ -149,17 +150,16 @@ public class TelaReuniao {
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					if(textField.getText().isEmpty()) {
+					if (textField.getText().isEmpty()) {
 						label.setText("campo vazio");
 						return;
 					}
 					String data = textField.getText();
-			
+
 					Fachada.cadastrarReuniao(data);
-					label.setText("reuniao criada: "+ data);
+					label.setText("reuniao criada: " + data);
 					listagem();
-				}
-				catch(Exception ex) {
+				} catch (Exception ex) {
 					label.setText(ex.getMessage());
 				}
 			}
@@ -181,17 +181,15 @@ public class TelaReuniao {
 		button_2 = new JButton("Apagar selecionado");
 		button_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try{
-					if (table.getSelectedRow() >= 0){	
-						int id = (int) table.getValueAt( table.getSelectedRow(), 0);
+				try {
+					if (table.getSelectedRow() >= 0) {
+						int id = (int) table.getValueAt(table.getSelectedRow(), 0);
 						Fachada.excluirReuniao(id);
-						label.setText("reuniao apagado" );
+						label.setText("reuniao apagado");
 						listagem();
-					}
-					else
+					} else
 						label.setText("nao selecionado");
-				}
-				catch(Exception ex) {
+				} catch (Exception ex) {
 					label.setText(ex.getMessage());
 				}
 			}
@@ -204,14 +202,14 @@ public class TelaReuniao {
 		btnExibirPessoas.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnExibirPessoas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try{
-					if (table.getSelectedRow() >= 0){	
-						int idreuniao = (int) table.getValueAt( table.getSelectedRow(), 0);
+				try {
+					if (table.getSelectedRow() >= 0) {
+						int idreuniao = (int) table.getValueAt(table.getSelectedRow(), 0);
 						Reuniao reuniao = Fachada.localizarReuniao(idreuniao);
 
-						if(reuniao != null) {
-							String texto="";
-							if(reuniao.getListaDePessoas().isEmpty())
+						if (reuniao != null) {
+							String texto = "";
+							if (reuniao.getListaDePessoas().isEmpty())
 								texto = "nao possui membros";
 							else
 								for (Pessoa a : reuniao.getListaDePessoas()) {
@@ -221,93 +219,88 @@ public class TelaReuniao {
 							JOptionPane.showMessageDialog(frame, texto, "pessoas", 1);
 						}
 					}
-				}
-				catch(Exception erro) {
+				} catch (Exception erro) {
 					label.setText(erro.getMessage());
 				}
 			}
 		});
-		btnExibirPessoas.setBounds(279, 287, 134, 23);
+		btnExibirPessoas.setBounds(279, 287, 146, 23);
 		frame.getContentPane().add(btnExibirPessoas);
-		
+
 		JButton btnNewButton = new JButton("Adicionar membro");
 		btnNewButton.addActionListener(new ActionListener() {
 			@SuppressWarnings("unchecked")
 			public void actionPerformed(ActionEvent e) {
-				
-			
+
 				JComboBox comboBox = new JComboBox<Object>();
 				comboBox.setBounds(486, 216, 161, 43);
 				frame.getContentPane().add(comboBox);
 				List<Pessoa> pessoas = Fachada.listarPessoas();
-				
-				for(Pessoa pessoa : pessoas) {
+
+				for (Pessoa pessoa : pessoas) {
 					comboBox.addItem(pessoa.getNome());
 				}
-				
-				
+
 				JButton btnNewButton_1 = new JButton("Confirmar");
 				btnNewButton_1.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						
-						
+
 						try {
-							
-							if (table.getSelectedRow() >= 0){	
-								int idreuniao = (int) table.getValueAt( table.getSelectedRow(), 0);
-								Reuniao reuniao = Fachada.localizarReuniao(idreuniao);
+
+							if (table.getSelectedRow() >= 0) {
+								int idreuniao = (int) table.getValueAt(table.getSelectedRow(), 0);
+								Fachada.localizarReuniao(idreuniao);
 								int selectedIndex = comboBox.getSelectedIndex();
 								if (selectedIndex != -1) {
-								    String selectedValue = (String) comboBox.getItemAt(selectedIndex); // Obtém o valor selecionado com base no índice
-								     Fachada.agendarReuniao(selectedValue ,idreuniao); }
-								
+									String selectedValue = (String) comboBox.getItemAt(selectedIndex);
+									Fachada.agendarReuniao(selectedValue, idreuniao);
+									label.setText("Pessoa adicionada com sucesso!");
+								}
 							}
-							
-						}  catch (Exception erro) {
-							
+
+						} catch (Exception erro) {
+
 							label.setText(erro.getMessage());
 						}
 					}
 				});
-				btnNewButton_1.setBounds(590, 287, 89, 23);
+				btnNewButton_1.setBounds(520, 287, 100, 23);
 				frame.getContentPane().add(btnNewButton_1);
-		
-				
 			}
-			
+
 		});
-		btnNewButton.setBounds(279, 249, 134, 23);
+		btnNewButton.setBounds(279, 249, 146, 23);
 		frame.getContentPane().add(btnNewButton);
-		
-		
-		
-		
-		
+
+		JLabel lblAgendeUmaReunio = new JLabel("Agende uma reunião");
+		lblAgendeUmaReunio.setHorizontalAlignment(SwingConstants.LEFT);
+		lblAgendeUmaReunio.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblAgendeUmaReunio.setBounds(97, 240, 134, 14);
+		frame.getContentPane().add(lblAgendeUmaReunio);
+
 	}
 
 	public void listagem() {
-		try{
+		try {
 			List<Reuniao> lista = Fachada.listarReunioes();
 
 			// model armazena todas as linhas e colunas do table
 			DefaultTableModel model = new DefaultTableModel();
 
-			//adicionar colunas no model
+			// adicionar colunas no model
 			model.addColumn("ID");
 			model.addColumn("Data");
-		
 
-			//adicionar linhas no model
-			for(Reuniao reuniao : lista) {
-				model.addRow(new Object[]{reuniao.getId(), reuniao.getData()} );
+			// adicionar linhas no model
+			for (Reuniao reuniao : lista) {
+				model.addRow(new Object[] { reuniao.getId(), reuniao.getData() });
 			}
 
-			//atualizar model no table (visualizacao)
+			// atualizar model no table (visualizacao)
 			table.setModel(model);
 
-			label_4.setText("resultados: "+lista.size()+ " objetos");
-		}
-		catch(Exception erro){
+			label_4.setText("resultados: " + lista.size() + " objetos");
+		} catch (Exception erro) {
 			label.setText(erro.getMessage());
 		}
 	}
