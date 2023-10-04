@@ -48,7 +48,6 @@ public class TelaPessoa {
 	private JLabel label_3;
 	private JLabel label_4;
 
-	private ObjectContainer manager;
 	private JButton button_3;
 
 	/**
@@ -101,6 +100,15 @@ public class TelaPessoa {
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(21, 43, 674, 148);
 		frame.getContentPane().add(scrollPane);
+		
+		JButton btnNewButton_2 = new JButton("Voltar");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
+			}
+		});
+		btnNewButton_2.setBounds(0, 0, 85, 21);
+		frame.getContentPane().add(btnNewButton_2);
 
 		table = new JTable();
 		table.addMouseListener(new MouseAdapter() {
@@ -126,6 +134,7 @@ public class TelaPessoa {
 		label.setForeground(Color.BLUE);
 		label.setBounds(21, 321, 688, 14);
 		frame.getContentPane().add(label);
+		label.setText("Obs: selecione alguma linha.");
 
 		label_4 = new JLabel("resultados:");
 		label_4.setBounds(21, 190, 431, 14);
@@ -180,10 +189,8 @@ public class TelaPessoa {
 			public void actionPerformed(ActionEvent e) {
 				try{
 					if (table.getSelectedRow() >= 0){	
-						label.setText("nao implementado " ); 
 						String nome = (String) table.getValueAt( table.getSelectedRow(), 0);
-						System.out.println("excluidno " +nome);
-
+						System.out.println("excluindo " +nome);
 						Fachada.excluirPessoa(nome);
 						label.setText("Pessoa apagada" );
 						listagem();
@@ -233,21 +240,12 @@ public class TelaPessoa {
 	public void listagem() {
 		try{
 			List<Pessoa> lista = Fachada.listarPessoas();
-
-			// model armazena todas as linhas e colunas do table
 			DefaultTableModel model = new DefaultTableModel();
-
-			//adicionar colunas no model
 			model.addColumn("nome");
-
-			//adicionar linhas no model
 			for(Pessoa pessoa : lista) {
 				model.addRow(new Object[]{ pessoa.getNome()} );
 			}
-
-			//atualizar model no table (visualizacao)
 			table.setModel(model);
-
 			label_4.setText("resultados: "+lista.size()+ " objetos");
 		}
 		catch(Exception erro){

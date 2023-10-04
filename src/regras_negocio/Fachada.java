@@ -24,7 +24,7 @@ public class Fachada {
 	private static DAOReuniao daoreuniao = new DAOReuniao();
 	private static DAOPessoa daopessoa = new DAOPessoa();
 	private static DAOUsuario daousuario = new DAOUsuario();
-	public static Usuario logado; // contem o objeto Usuario logado em TelaLogin.java
+	public static Usuario logado;
 
 	public static void inicializar() {
 		DAO.open();
@@ -186,11 +186,11 @@ public class Fachada {
 		Reuniao reuniao = Fachada.localizarReuniao(IdReuniao);
 		
 		if(pessoa == null) {
-			throw new Exception("pessoa não encontrada!");
+			throw new Exception("pessoa nao encontrada!");
 		}
 		
 		if(reuniao == null) {
-			throw new Exception("reunião não encontrada!");
+			throw new Exception("reuniao nao encontrada!");
 		}
 		
 		reuniao.adicionarPessoa(pessoa);

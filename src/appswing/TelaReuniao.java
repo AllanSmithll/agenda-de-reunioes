@@ -104,6 +104,15 @@ public class TelaReuniao {
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(21, 43, 674, 148);
 		frame.getContentPane().add(scrollPane);
+		
+		JButton btnNewButton_2 = new JButton("Voltar");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
+			}
+		});
+		btnNewButton_2.setBounds(0, 0, 85, 21);
+		frame.getContentPane().add(btnNewButton_2);
 
 		table = new JTable();
 		table.addMouseListener(new MouseAdapter() {
@@ -125,10 +134,11 @@ public class TelaReuniao {
 		table.setShowGrid(true);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
-		label = new JLabel(""); // label de mensagem
+		label = new JLabel("");
 		label.setForeground(Color.BLUE);
-		label.setBounds(21, 321, 688, 14);
+		label.setBounds(300, 321, 688, 14);
 		frame.getContentPane().add(label);
+		label.setText("Obs: selecione alguma linha.");
 
 		label_4 = new JLabel("resultados:");
 		label_4.setBounds(21, 190, 431, 14);
@@ -185,7 +195,7 @@ public class TelaReuniao {
 					if (table.getSelectedRow() >= 0) {
 						int id = (int) table.getValueAt(table.getSelectedRow(), 0);
 						Fachada.excluirReuniao(id);
-						label.setText("reuniao apagado");
+						label.setText("reuniao apagada");
 						listagem();
 					} else
 						label.setText("nao selecionado");
@@ -259,7 +269,6 @@ public class TelaReuniao {
 							}
 
 						} catch (Exception erro) {
-
 							label.setText(erro.getMessage());
 						}
 					}
@@ -277,7 +286,6 @@ public class TelaReuniao {
 		lblAgendeUmaReunio.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblAgendeUmaReunio.setBounds(97, 240, 134, 14);
 		frame.getContentPane().add(lblAgendeUmaReunio);
-
 	}
 
 	public void listagem() {

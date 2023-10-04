@@ -30,8 +30,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
-import com.db4o.ObjectContainer;
-
 import models.Pessoa;
 import models.Reuniao;
 import regras_negocio.Fachada;
@@ -44,8 +42,9 @@ public class TelaConsulta {
 	private JLabel label;
 	private JLabel label_4;
 
-	private ObjectContainer manager;
-	private JComboBox comboBox;
+	private JComboBox<Object> comboBox;
+	private JButton button_1;
+	private JButton btnNewButton;
 
 	/**
 	 * Launch the application.
@@ -73,6 +72,7 @@ public class TelaConsulta {
 	/**
 	 * Initialize the contents of the frame.
 	 */
+	@SuppressWarnings("unchecked")
 	private void initialize() {
 		frame = new JDialog();
 		frame.setModal(true);
@@ -159,12 +159,25 @@ public class TelaConsulta {
 		button.setBounds(606, 10, 89, 23);
 		frame.getContentPane().add(button);
 
-		comboBox = new JComboBox();
+		comboBox = new JComboBox<Object>();
 		comboBox.setToolTipText("selecione a consulta");
-		comboBox.setModel(new DefaultComboBoxModel(new String[] { "Reunioes em determinada data",
+		comboBox.setModel(new DefaultComboBoxModel<Object>(new String[] { "Reunioes em determinada data",
 				"Reunioes que tenham determinada pessoa", "Pessoas que estao em mais de N reunioes" }));
 		comboBox.setBounds(21, 10, 513, 22);
 		frame.getContentPane().add(comboBox);
+		
+		button_1 = new JButton("New button");
+		button_1.setBounds(620, 321, 45, -17);
+		frame.getContentPane().add(button_1);
+		
+		btnNewButton = new JButton("Voltar");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
+			}
+		});
+		btnNewButton.setBounds(610, 314, 85, 21);
+		frame.getContentPane().add(btnNewButton);
 	}
 
 	public void listagemReuniao(List<Reuniao> lista) {
