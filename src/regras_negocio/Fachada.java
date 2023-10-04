@@ -130,6 +130,25 @@ public class Fachada {
 	public static Pessoa localizarPessoa(String nome) {
 		return daopessoa.read(nome);
 	}
+	public static void removerPessoaDaReuniao(String nome, int idReuniao) throws Exception {
+		
+		
+		
+		Reuniao reuniao = Fachada.localizarReuniao(idReuniao);
+		if(reuniao == null) {
+			throw new Exception("Reunião inexistente!");
+		}
+		Pessoa pessoa = Fachada.localizarPessoa(nome);
+		if(pessoa == null) {
+			throw new Exception("Pessoa inexistente!");
+		}
+		
+		reuniao.removerPessoa(pessoa);
+		pessoa.removerReuniao(reuniao);
+		
+		daoreuniao.update(reuniao);
+		daopessoa.update(pessoa);
+	}
 
 	// ------------------Usuario------------------------------------
 	public static Usuario cadastrarUsuario(String nome, String senha) throws Exception {
