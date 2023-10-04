@@ -111,10 +111,10 @@ public class Fachada {
 		}
 		// Removendo o relacionamento antes da exclusão
 		for (Reuniao reuniao : pessoaSendoExcluida.getReunioes()) {
-			pessoaSendoExcluida.removerReuniao(reuniao);
 			reuniao.removerPessoa(pessoaSendoExcluida);
 			daoreuniao.update(reuniao);
 		}
+		daopessoa.update(pessoaSendoExcluida);
 		daopessoa.delete(pessoaSendoExcluida);
 		DAO.commit();
 
