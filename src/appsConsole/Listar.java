@@ -4,32 +4,28 @@
  */
 package appsConsole;
 
-import java.util.List;
-
 import com.db4o.ObjectContainer;
-import com.db4o.query.Query;
 
 import models.Pessoa;
 import models.Reuniao;
 import regras_negocio.Fachada;
 
- class ListarFachada {
+class Listar {
 	protected ObjectContainer manager;
 
 	public Listar() {
 		try {
 			Fachada.inicializar();
-			
+
 			System.out.println("\n---listagem de Pessoa:");
-	
-			
-			for(Pessoa pessoa: Fachada.listarPessoas()) {
+
+			for (Pessoa pessoa : Fachada.listarPessoas()) {
 				System.out.println(pessoa);
 			}
-					
+
 			System.out.println("\n---listagem de Reuniões:");
-			
-			for(Reuniao reuniao: Fachada.listarReunioes()) {
+
+			for (Reuniao reuniao : Fachada.listarReunioes()) {
 				System.out.println(reuniao);
 			}
 
