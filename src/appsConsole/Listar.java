@@ -11,27 +11,25 @@ import com.db4o.query.Query;
 
 import models.Pessoa;
 import models.Reuniao;
+import regras_negocio.Fachada;
 
- class Listar {
+ class ListarFachada {
 	protected ObjectContainer manager;
 
 	public Listar() {
 		try {
-			manager = Util.conectarBanco();
+			Fachada.inicializar();
 			
 			System.out.println("\n---listagem de Pessoa:");
-			Query q = manager.query();
-			q.constrain(Pessoa.class);  				
-			List<Pessoa> listaDePessoas = q.execute();
-			for(Pessoa pessoa: listaDePessoas) {
+	
+			
+			for(Pessoa pessoa: Fachada.listarPessoas()) {
 				System.out.println(pessoa);
 			}
-			System.out.println("\n---listagem de Reunioes:");
-			q = manager.query();
-			q.constrain(Reuniao.class);  				
-			List<Reuniao> listaDeReunioes = q.execute();
+					
+			System.out.println("\n---listagem de Reuniões:");
 			
-			for(Reuniao reuniao: listaDeReunioes) {
+			for(Reuniao reuniao: Fachada.listarReunioes()) {
 				System.out.println(reuniao);
 			}
 
@@ -39,7 +37,7 @@ import models.Reuniao;
 			System.out.println(e.getMessage());
 		}
 
-		Util.desconectar();
+		Fachada.finalizar();
 		System.out.println("\nfim do programa !");
 	}
 
