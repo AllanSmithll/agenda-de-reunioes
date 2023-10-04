@@ -13,9 +13,9 @@ import models.Pessoa;
 import models.Reuniao;
 import regras_negocio.Fachada;
 
-public class ConsultaFachada {
+public class Consultar {
 
-	public ConsultaFachada() {
+	public Consultar() {
 		try {
 			Fachada.inicializar();
 
