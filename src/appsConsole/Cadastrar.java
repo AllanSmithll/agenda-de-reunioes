@@ -4,93 +4,54 @@
  */
 package appsConsole;
 
-import java.util.List;
-
-import com.db4o.ObjectContainer;
-import com.db4o.query.Query;
-
-import models.Pessoa;
-import models.Reuniao;
+import regras_negocio.Fachada;
 
 public class Cadastrar {
-	protected ObjectContainer manager;
 
 	public Cadastrar() {
 		try {
-		   manager = Util.conectarBanco();
-		   Pessoa p1 = new Pessoa("Allan");
-		   manager.store(p1);
-		   manager.commit();
-	       Pessoa p2 = new Pessoa("Marcio");
-	       manager.store(p2);
-	       manager.commit();
-	       Pessoa p3 = new Pessoa("Claudio");
-	       manager.store(p3);
-	       manager.commit();
-	       Pessoa p4 = new Pessoa("Wagner");
-	       manager.store(p4);
-	       manager.commit();
-	         
-	       Reuniao r1 = new Reuniao("05/09/2023");
-	       Reuniao r2 = new Reuniao("05/09/2023");
-	       Reuniao r3 = new Reuniao("07/09/2023");
-	       Reuniao r4 = new Reuniao("10/09/2023");
-	       Reuniao r5 = new Reuniao("11/11/2023");
-	       r1.setId(Util.gerarIReuniao());
-	       manager.store(r1);
-	       r2.setId(Util.gerarIReuniao());
-	       manager.store(r2);
-	       r3.setId(Util.gerarIReuniao());
-	       manager.store(r3);    
-	       r4.setId(Util.gerarIReuniao());
-	       manager.store(r4);
-	       r5.setId(Util.gerarIReuniao());
-	       manager.store(r5);
-	       manager.commit();
-	       
-	       r1.adicionarPessoa(p1);
-	       r1.adicionarPessoa(p2);
-	       r1.adicionarPessoa(p3);
-	       r1.adicionarPessoa(p4);
-	       r2.adicionarPessoa(p1);
-	       r2.adicionarPessoa(p4);
-	       r3.adicionarPessoa(p1);
-	       r3.adicionarPessoa(p2);
-	       r3.adicionarPessoa(p3);
-	       r4.adicionarPessoa(p2);
-	       r4.adicionarPessoa(p3);
-	       r5.adicionarPessoa(p1);
-	       r5.adicionarPessoa(p3);
-	       manager.store(r1);
-	       manager.store(r2);
-	       manager.store(r3);
-	       manager.store(r4);
-	       manager.store(r5);
-	       manager.commit();
-	    
-	       
-	       Query q = manager.query();
-	       q.constrain(Pessoa.class);
-	       List<Pessoa> pessoas = q.execute();
-	       System.out.println("Pessoas no banco");
-	       for(Pessoa pessoa : pessoas) {
-	    	   System.out.println(pessoa);
-	       }	
-	       
-	       Query q2 = manager.query();
-	       q2.constrain(Reuniao.class);
-	       List<Reuniao> reunioes = q2.execute();
-	       System.out.println("Reunioes no banco");
-	       for(Reuniao reuniao : reunioes) {
-	    	   System.out.println(reuniao);
-	       }	
-	       
-	       
+		   Fachada.inicializar();
+		   System.out.println("Cadastrando pessoas");
+           Fachada.cadastrarPessoa("Allan");
+           Fachada.cadastrarPessoa("Marcio");
+           Fachada.cadastrarPessoa("Claudio");
+           Fachada.cadastrarPessoa("Wagner");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-		Util.desconectar();
-		System.out.println("\nfim do programa !");
+		
+		try {
+		   System.out.println("Cadastrando reunioes");
+           Fachada.cadastrarReuniao("05/10/2023");
+           Fachada.cadastrarReuniao("05/10/2023");
+           Fachada.cadastrarReuniao("07/10/2023");
+           Fachada.cadastrarReuniao("10/10/2023");
+           Fachada.cadastrarReuniao("11/10/2023");
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		try {
+		   System.out.println("Agendando reunioes");
+           Fachada.agendarReuniao("Allan", 1);
+           Fachada.agendarReuniao("Marcio", 1);
+           Fachada.agendarReuniao("Claudio", 1);
+           Fachada.agendarReuniao("Wagner", 1);
+           Fachada.agendarReuniao("Allan", 2);
+           Fachada.agendarReuniao("Wagner", 2);
+           Fachada.agendarReuniao("Allan", 3);
+           Fachada.agendarReuniao("Marcio", 3);
+           Fachada.agendarReuniao("Claudio", 3);
+           Fachada.agendarReuniao("Marcio", 4);
+           Fachada.agendarReuniao("Claudio", 4);
+           Fachada.agendarReuniao("Allan", 5);
+           Fachada.agendarReuniao("Claudio", 5);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		Fachada.finalizar();
+		System.out.println("\nfim do programa!");
 	}
 
 	public static void main(String[] args) {
