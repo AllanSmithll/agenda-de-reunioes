@@ -3,8 +3,8 @@ Tema da disciplina de Persistência a Objetos, a Agenda de Reunião visa o geren
 
 ## Objetivo
 Praticar os conceitos de persistência transparente de objetos, através do
-desenvolvimento de protótipo de um sistema de informação, usando Java e o banco de
-dados orientado a objetos db4o.
+desenvolvimento de protótipo de um sistema de informação, usando Java e o bancos 
+de dados, tanto para objetos (db4o), quanto para relacional (postgreSQL) ou documental (MongoDB).
 
 ## Funcionalidades
 - Agendamento de reuniões
