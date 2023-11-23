@@ -21,7 +21,7 @@ public class DAOPessoa  extends DAO<Pessoa>{
 	}
 	
 	public List<Pessoa> readAll(){
-		TypedQuery<Pessoa> q = manager.createQuery("select p from Pessoa p ", Pessoa.class);
+		TypedQuery<Pessoa> q = manager.createQuery("select p from Pessoa p  JOIN FETCH p.reunioes ", Pessoa.class);
 		return  q.getResultList();
 	}
 	//listarPessoasEmMaisDeNReunioes

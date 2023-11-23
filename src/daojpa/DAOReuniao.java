@@ -18,7 +18,7 @@ public class DAOReuniao extends DAO<Reuniao>{
 			return null;}
 	}
 	public List<Reuniao> readAll(){
-		TypedQuery<Reuniao> q = manager.createQuery("select r from Reuniao r ", Reuniao.class);
+		TypedQuery<Reuniao> q = manager.createQuery("select r from Reuniao r LEFT JOIN FETCH r.listaDePessoas ", Reuniao.class);
 		return  q.getResultList();
 	}
 	

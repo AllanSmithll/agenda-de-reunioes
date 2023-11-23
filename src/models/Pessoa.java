@@ -84,7 +84,7 @@ public class Pessoa {
             sb.append("\n");
             for (Reuniao r : reunioes) {
             	if(r != null) {
-                sb.append(" # ").append(r.toString()).append("\n");
+                sb.append(" # ").append("ID:" + r.getId() + " Data: " + r.getData()).append("\n");
                 }
             }
         }
