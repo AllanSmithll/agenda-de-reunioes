@@ -211,16 +211,19 @@ public class Fachada {
 		Reuniao reuniao = Fachada.localizarReuniao(IdReuniao);
 		
 		if(pessoa == null) {
+			DAO.rollback();
 			throw new Exception("pessoa nao encontrada!");
 		}
 		
 		if(reuniao == null) {
+			DAO.rollback();
 			throw new Exception("reuniao nao encontrada!");
 		}
 		
+		
+//		pessoa = new Pessoa(nomeDaPessoa);		
 		reuniao.adicionarPessoa(pessoa);
-		daoreuniao.update(reuniao);
-		daopessoa.update(pessoa);
+
 		DAO.commit();	
 	}
 }

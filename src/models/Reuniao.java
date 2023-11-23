@@ -24,7 +24,9 @@ public class Reuniao {
 	
 	@ManyToMany(cascade= {CascadeType.PERSIST, CascadeType.MERGE}, fetch=FetchType.LAZY)
 	private List<Pessoa> listaDePessoas = new ArrayList<>();
-
+	
+	public Reuniao() {}
+	
 	public Reuniao(String dataDaReuniao) {
 		data = dataDaReuniao;
 	}
