@@ -10,7 +10,7 @@ public class DAOReuniao extends DAO<Reuniao>{
 	public Reuniao read(Object chave) {
 		try {
 			int id = (int) chave;
-			TypedQuery<Reuniao> q = manager.createQuery("select r from Reuniao r where r.id = :n ",Reuniao.class);
+			TypedQuery<Reuniao> q = manager.createQuery("select r from Reuniao r  where r.id = :n ",Reuniao.class);
 			q.setParameter("n", id);
 			return q.getSingleResult();
 			

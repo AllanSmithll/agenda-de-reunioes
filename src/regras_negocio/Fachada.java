@@ -62,17 +62,22 @@ public class Fachada {
 
 	public static void excluirReuniao(int id) throws Exception {
 		DAO.begin();
+		
 		Reuniao reuniaoSendoExcluida = daoreuniao.read(id);
+		
 		if (reuniaoSendoExcluida == null) {
+			DAO.rollback();
 			throw new Exception("Reuniao ja excluida do nosso banco de dados!");
 		}
+		
 		for (Pessoa pessoa : reuniaoSendoExcluida.getListaDePessoas()) {
 			pessoa.removerReuniao(reuniaoSendoExcluida);
-			reuniaoSendoExcluida.removerPessoa(pessoa);
-			daopessoa.update(pessoa);
+//			reuniaoSendoExcluida.removerPessoa(pessoa);
 		}
+		
 		daoreuniao.delete(reuniaoSendoExcluida);
 		DAO.commit();
+		
 	}
 
 	public static List<Reuniao> listarReunioes() {
@@ -113,14 +118,15 @@ public class Fachada {
 		DAO.begin();
 		Pessoa pessoaSendoExcluida = daopessoa.read(nome);
 		if (pessoaSendoExcluida == null) {
+			DAO.rollback();
 			throw new Exception("Pessoa inexistente!");
 		}
 		// Removendo o relacionamento antes da exclusão
 		for (Reuniao reuniao : pessoaSendoExcluida.getReunioes()) {
 			reuniao.removerPessoa(pessoaSendoExcluida);
-			daoreuniao.update(reuniao);
+//			daoreuniao.update(reuniao);
 		}
-		daopessoa.update(pessoaSendoExcluida);
+//		daopessoa.update(pessoaSendoExcluida);
 		daopessoa.delete(pessoaSendoExcluida);
 		DAO.commit();
 
@@ -216,7 +222,7 @@ public class Fachada {
 		}
 		
 		if(reuniao == null) {
-			DAO.rollback();
+			
 			throw new Exception("reuniao nao encontrada!");
 		}
 		
