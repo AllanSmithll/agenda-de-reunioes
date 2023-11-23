@@ -31,8 +31,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
-import com.db4o.ObjectContainer;
-
+import jakarta.persistence.EntityManager;
 import models.Pessoa;
 import models.Reuniao;
 import regras_negocio.Fachada;
@@ -49,7 +48,7 @@ public class TelaReuniao {
 	private JLabel label_2;
 	private JLabel label_4;
 
-	private ObjectContainer manager;
+	private EntityManager manager;
 	private JButton btnExibirPessoas;
 	private JComboBox comboBox_1;
 

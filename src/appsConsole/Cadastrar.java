@@ -22,11 +22,11 @@ public class Cadastrar {
 		
 		try {
 		   System.out.println("Cadastrando reunioes");
-           Fachada.cadastrarReuniao("05/10/2023");
-           Fachada.cadastrarReuniao("05/10/2023");
-           Fachada.cadastrarReuniao("07/10/2023");
-           Fachada.cadastrarReuniao("10/10/2023");
-           Fachada.cadastrarReuniao("11/10/2023");
+           Fachada.cadastrarReuniao("05/12/2024");
+           Fachada.cadastrarReuniao("05/12/2024");
+           Fachada.cadastrarReuniao("07/12/2024");
+           Fachada.cadastrarReuniao("10/12/2024");
+           Fachada.cadastrarReuniao("11/12/2024");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}

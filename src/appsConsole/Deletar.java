@@ -5,18 +5,12 @@
 package appsConsole;
 
 
-import java.util.List;
-
-import com.db4o.ObjectContainer;
-import com.db4o.query.Query;
-
-import models.Pessoa;
-import models.Reuniao;
+import jakarta.persistence.EntityManager;
 import regras_negocio.Fachada;
 
 
 public class Deletar {
-	protected ObjectContainer manager;
+	protected EntityManager manager;
 
 	public Deletar() {
 		try {

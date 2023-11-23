@@ -7,9 +7,22 @@ package models;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+@Entity
 public class Reuniao {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	
 	private String data;
+	
+	@ManyToMany(cascade= {CascadeType.PERSIST, CascadeType.MERGE}, fetch=FetchType.LAZY)
 	private List<Pessoa> listaDePessoas = new ArrayList<>();
 
 	public Reuniao(String dataDaReuniao) {
@@ -38,8 +51,7 @@ public class Reuniao {
 
 	public void removerPessoa(Pessoa pessoa) throws Exception {
 		this.listaDePessoas.remove(pessoa);
-//		this.listaDePessoas.removeIf(p -> p.equals(pessoa));
-//		pessoa.removerReuniao(this);
+
 	}
 
 	public int numeroPessoasDaReuniao() {

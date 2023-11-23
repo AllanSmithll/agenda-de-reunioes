@@ -6,10 +6,16 @@
 
 package models;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+@Entity
 public class Usuario {
+	@Id
 	private String nome;
 	private String senha;
 	
+	public Usuario() {}
 	public Usuario(String nome, String senha) {
 		super();
 		this.nome = nome;
@@ -36,4 +42,6 @@ public class Usuario {
 	public String toString() {
 		return "Usuario [nome=" + nome + ", senha=" + senha + "]";
 	}
+	
+	
 }

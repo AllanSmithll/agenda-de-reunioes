@@ -9,10 +9,13 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-import daodb4o.DAO;
-import daodb4o.DAOPessoa;
-import daodb4o.DAOReuniao;
-import daodb4o.DAOUsuario;
+
+
+import daojpa.DAO;
+import daojpa.DAOPessoa;
+import daojpa.DAOReuniao;
+import daojpa.DAOUsuario;
+
 import models.Pessoa;
 import models.Reuniao;
 import models.Usuario;
@@ -44,7 +47,7 @@ public class Fachada {
 		LocalDate dataReuniao = LocalDate.parse(data, formatter);
 		LocalDate dataAtual = LocalDate.now();
 		if (dataReuniao.isBefore(dataAtual)) {
-			throw new Exception("A data da reuniao deve ser para hoje ou no futuro.");
+			throw new Exception(" aqui A data da reuniao deve ser para hoje ou no futuro.");
 		}
 		Reuniao reuniao = new Reuniao(data);
 
@@ -91,12 +94,15 @@ public class Fachada {
 		}
 		Pessoa pessoaSendoCadastrada = daopessoa.read(nome);
 		if (pessoaSendoCadastrada != null) {
+			DAO.rollback();
 			throw new Exception("Pessoa ja foi cadastrada!");
 		}
 		pessoaSendoCadastrada = new Pessoa(nome);
+		
 		try {
 			daopessoa.create(pessoaSendoCadastrada);
 		} catch (Exception e) {
+			DAO.rollback();
 			throw new Exception("Erro ao cadastrar pessoa: " + e.getMessage());
 		}
 		DAO.commit();
