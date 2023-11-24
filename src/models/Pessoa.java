@@ -28,7 +28,7 @@ public class Pessoa {
 	@Convert(converter=LowerToUpperConverter.class)
     private String nome;
     
-    @ManyToMany(cascade= {CascadeType.PERSIST, CascadeType.MERGE}, fetch=FetchType.LAZY)
+    @ManyToMany(mappedBy = "listaDePessoas",cascade= {CascadeType.PERSIST, CascadeType.MERGE}, fetch=FetchType.LAZY)
     private List<Reuniao> reunioes = new ArrayList<>();
     
     public Pessoa (){}
