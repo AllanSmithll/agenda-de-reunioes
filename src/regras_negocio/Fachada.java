@@ -9,10 +9,13 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-import daodb4o.DAO;
-import daodb4o.DAOPessoa;
-import daodb4o.DAOReuniao;
-import daodb4o.DAOUsuario;
+
+
+import daojpa.DAO;
+import daojpa.DAOPessoa;
+import daojpa.DAOReuniao;
+import daojpa.DAOUsuario;
+
 import models.Pessoa;
 import models.Reuniao;
 import models.Usuario;
@@ -44,7 +47,7 @@ public class Fachada {
 		LocalDate dataReuniao = LocalDate.parse(data, formatter);
 		LocalDate dataAtual = LocalDate.now();
 		if (dataReuniao.isBefore(dataAtual)) {
-			throw new Exception("A data da reuniao deve ser para hoje ou no futuro.");
+			throw new Exception(" aqui A data da reuniao deve ser para hoje ou no futuro.");
 		}
 		Reuniao reuniao = new Reuniao(data);
 
@@ -59,17 +62,22 @@ public class Fachada {
 
 	public static void excluirReuniao(int id) throws Exception {
 		DAO.begin();
+		
 		Reuniao reuniaoSendoExcluida = daoreuniao.read(id);
+		
 		if (reuniaoSendoExcluida == null) {
+			DAO.rollback();
 			throw new Exception("Reuniao ja excluida do nosso banco de dados!");
 		}
+		
 		for (Pessoa pessoa : reuniaoSendoExcluida.getListaDePessoas()) {
 			pessoa.removerReuniao(reuniaoSendoExcluida);
-			reuniaoSendoExcluida.removerPessoa(pessoa);
-			daopessoa.update(pessoa);
+//			reuniaoSendoExcluida.removerPessoa(pessoa);
 		}
+		
 		daoreuniao.delete(reuniaoSendoExcluida);
 		DAO.commit();
+		
 	}
 
 	public static List<Reuniao> listarReunioes() {
@@ -91,12 +99,15 @@ public class Fachada {
 		}
 		Pessoa pessoaSendoCadastrada = daopessoa.read(nome);
 		if (pessoaSendoCadastrada != null) {
+			DAO.rollback();
 			throw new Exception("Pessoa ja foi cadastrada!");
 		}
 		pessoaSendoCadastrada = new Pessoa(nome);
+		
 		try {
 			daopessoa.create(pessoaSendoCadastrada);
 		} catch (Exception e) {
+			DAO.rollback();
 			throw new Exception("Erro ao cadastrar pessoa: " + e.getMessage());
 		}
 		DAO.commit();
@@ -107,14 +118,15 @@ public class Fachada {
 		DAO.begin();
 		Pessoa pessoaSendoExcluida = daopessoa.read(nome);
 		if (pessoaSendoExcluida == null) {
+			DAO.rollback();
 			throw new Exception("Pessoa inexistente!");
 		}
 		// Removendo o relacionamento antes da exclusão
 		for (Reuniao reuniao : pessoaSendoExcluida.getReunioes()) {
 			reuniao.removerPessoa(pessoaSendoExcluida);
-			daoreuniao.update(reuniao);
+//			daoreuniao.update(reuniao);
 		}
-		daopessoa.update(pessoaSendoExcluida);
+//		daopessoa.update(pessoaSendoExcluida);
 		daopessoa.delete(pessoaSendoExcluida);
 		DAO.commit();
 
@@ -205,16 +217,19 @@ public class Fachada {
 		Reuniao reuniao = Fachada.localizarReuniao(IdReuniao);
 		
 		if(pessoa == null) {
+			DAO.rollback();
 			throw new Exception("pessoa nao encontrada!");
 		}
 		
 		if(reuniao == null) {
+			
 			throw new Exception("reuniao nao encontrada!");
 		}
 		
+		
+//		pessoa = new Pessoa(nomeDaPessoa);		
 		reuniao.adicionarPessoa(pessoa);
-		daoreuniao.update(reuniao);
-		daopessoa.update(pessoa);
+
 		DAO.commit();	
 	}
 }

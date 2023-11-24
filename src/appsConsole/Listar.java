@@ -4,14 +4,13 @@
  */
 package appsConsole;
 
-import com.db4o.ObjectContainer;
-
+import jakarta.persistence.EntityManager;
 import models.Pessoa;
 import models.Reuniao;
 import regras_negocio.Fachada;
 
 class Listar {
-	protected ObjectContainer manager;
+	protected EntityManager manager;
 
 	public Listar() {
 		try {

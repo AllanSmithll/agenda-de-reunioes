@@ -30,8 +30,6 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
-import com.db4o.ObjectContainer;
-
 import models.Pessoa;
 import models.Reuniao;
 import regras_negocio.Fachada;
