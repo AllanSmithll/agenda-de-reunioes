@@ -42,6 +42,10 @@
 
 6. Realizar a apresentação do projeto, destacando suas funcionalidades e características.
 
+### JPA
+
+7. Implementar classes JPA.
+
 ## Requisitos Não Funcionais
 
 ### Restrição de Reuniões

@@ -42,7 +42,7 @@ public class TelaReuniao {
 	private JScrollPane scrollPane;
 	private JTextField textField;
 	private JButton button;
-	private JButton button_1;
+	private JButton btnProximoPasso;
 	private JButton button_2;
 	private JLabel label;
 	private JLabel label_2;
@@ -135,7 +135,7 @@ public class TelaReuniao {
 
 		label = new JLabel("");
 		label.setForeground(Color.BLUE);
-		label.setBounds(300, 321, 688, 14);
+		label.setBounds(31, 327, 664, 14);
 		frame.getContentPane().add(label);
 		label.setText("Obs: selecione alguma linha.");
 
@@ -155,27 +155,15 @@ public class TelaReuniao {
 		textField.setBounds(68, 264, 195, 20);
 		frame.getContentPane().add(textField);
 
-		button_1 = new JButton("Criar nova Reunião");
-		button_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					if (textField.getText().isEmpty()) {
-						label.setText("campo vazio");
-						return;
-					}
-					String data = textField.getText();
-
-					Fachada.cadastrarReuniao(data);
-					label.setText("reuniao criada: " + data);
-					listagem();
-				} catch (Exception ex) {
-					label.setText(ex.getMessage());
-				}
-			}
-		});
-		button_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		button_1.setBounds(78, 300, 153, 23);
-		frame.getContentPane().add(button_1);
+		btnProximoPasso = new JButton("Próximo Passo");
+	    btnProximoPasso.setFont(new Font("Tahoma", Font.PLAIN, 12));
+	    btnProximoPasso.addActionListener(new ActionListener() {
+	        public void actionPerformed(ActionEvent e) {
+	            proximoPasso();
+	        }
+	    });
+	    btnProximoPasso.setBounds(97, 294, 120, 23);
+	    frame.getContentPane().add(btnProximoPasso);
 
 		button = new JButton("Listar");
 		button.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -224,7 +212,6 @@ public class TelaReuniao {
 								for (Pessoa a : reuniao.getListaDePessoas()) {
 									texto = texto + a.getNome() + "\n";
 								}
-
 							JOptionPane.showMessageDialog(frame, texto, "pessoas", 1);
 						}
 					}
@@ -310,5 +297,69 @@ public class TelaReuniao {
 		} catch (Exception erro) {
 			label.setText(erro.getMessage());
 		}
+	}
+	
+	private void proximoPasso() {
+	    try {
+	        if (textField.getText().isEmpty()) {
+	            label.setText("Campo de data vazio");
+	            return;
+	        }
+
+	        String data = textField.getText();
+
+	        int idReuniao = Fachada.cadastrarReuniao(data).getId();
+	        frame.dispose();
+	        adicionarPessoasAReuniao(idReuniao);
+	    } catch (Exception ex) {
+	        label.setText(ex.getMessage());
+	    }
+	}
+
+	private void adicionarPessoasAReuniao(int idReuniao) {
+	    JDialog novaJanela = new JDialog();
+	    novaJanela.setTitle("Adicionar Pessoas à Reunião");
+	    novaJanela.setSize(400, 300);
+	    novaJanela.getContentPane().setLayout(null);
+
+	    JComboBox<String> comboBox = new JComboBox<>();
+	    comboBox.setBounds(50, 50, 200, 30);
+	    List<Pessoa> pessoas = Fachada.listarPessoas();
+
+	    for (Pessoa pessoa : pessoas) {
+	        comboBox.addItem(pessoa.getNome());
+	    }
+	    novaJanela.getContentPane().add(comboBox);
+
+	    JButton btnConfirmar = new JButton("Confirmar");
+	    btnConfirmar.addActionListener(new ActionListener() {
+	        public void actionPerformed(ActionEvent e) {
+	            try {
+	                int selectedIndex = comboBox.getSelectedIndex();
+	                if (selectedIndex != -1) {
+	                    String selectedValue = (String) comboBox.getItemAt(selectedIndex);
+	                    Reuniao reuniao = Fachada.localizarReuniao(idReuniao);
+	                    while (reuniao.getListaDePessoas().size() < 2) {
+	                        Fachada.agendarReuniao(selectedValue, idReuniao);
+	                        selectedValue = (String) comboBox.getItemAt(selectedIndex);
+	                        
+	                        int option = JOptionPane.showConfirmDialog(novaJanela, "Deseja adicionar mais pessoas à reunião?",
+	                        		"Confirmação", JOptionPane.YES_NO_OPTION);
+	                     
+	                        if (option == JOptionPane.NO_OPTION) {
+	                            break;
+	                        }
+	                    }
+	                    novaJanela.dispose();
+	                    frame.setVisible(true);
+	                }
+	            } catch (Exception ex) {
+	                label.setText(ex.getMessage());
+	            }
+	        }
+	    });
+	    btnConfirmar.setBounds(260, 50, 120, 30);
+	    novaJanela.getContentPane().add(btnConfirmar);
+	    novaJanela.setVisible(true);
 	}
 }
