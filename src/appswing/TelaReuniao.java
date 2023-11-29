@@ -7,7 +7,6 @@
 package appswing;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,6 +14,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -28,6 +28,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
@@ -56,15 +57,15 @@ public class TelaReuniao {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					TelaReuniao tela = new TelaReuniao();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+		SwingUtilities.invokeLater(new Runnable() {
+	        public void run() {
+	            try {
+	                TelaReuniao tela = new TelaReuniao();
+	            } catch (Exception e) {
+	                e.printStackTrace();
+	            }
+	        }
+	    });
 	}
 
 	/**
@@ -242,18 +243,16 @@ public class TelaReuniao {
 					public void actionPerformed(ActionEvent e) {
 
 						try {
-
 							if (table.getSelectedRow() >= 0) {
 								int idreuniao = (int) table.getValueAt(table.getSelectedRow(), 0);
 								Fachada.localizarReuniao(idreuniao);
 								int selectedIndex = comboBox.getSelectedIndex();
 								if (selectedIndex != -1) {
 									String selectedValue = (String) comboBox.getItemAt(selectedIndex);
-									Fachada.agendarReuniao(selectedValue, idreuniao);
+									Fachada.adicionarPessoaNaReuniao(selectedValue, idreuniao);
 									label.setText("Pessoa adicionada com sucesso!");
 								}
 							}
-
 						} catch (Exception erro) {
 							label.setText(erro.getMessage());
 						}
@@ -305,11 +304,9 @@ public class TelaReuniao {
 	            label.setText("Campo de data vazio");
 	            return;
 	        }
-
 	        String data = textField.getText();
 
 	        int idReuniao = Fachada.cadastrarReuniao(data).getId();
-	        frame.dispose();
 	        adicionarPessoasAReuniao(idReuniao);
 	    } catch (Exception ex) {
 	        label.setText(ex.getMessage());
@@ -338,20 +335,24 @@ public class TelaReuniao {
 	                int selectedIndex = comboBox.getSelectedIndex();
 	                if (selectedIndex != -1) {
 	                    String selectedValue = (String) comboBox.getItemAt(selectedIndex);
-	                    Reuniao reuniao = Fachada.localizarReuniao(idReuniao);
-	                    while (reuniao.getListaDePessoas().size() < 2) {
-	                        Fachada.agendarReuniao(selectedValue, idReuniao);
-	                        selectedValue = (String) comboBox.getItemAt(selectedIndex);
-	                        
-	                        int option = JOptionPane.showConfirmDialog(novaJanela, "Deseja adicionar mais pessoas à reunião?",
-	                        		"Confirmação", JOptionPane.YES_NO_OPTION);
-	                     
-	                        if (option == JOptionPane.NO_OPTION) {
-	                            break;
-	                        }
+	                    
+	                    List<String> nomesPessoas = new ArrayList<>();
+	                    nomesPessoas.add(selectedValue);
+
+	                    Fachada.adicionarPessoasAReuniao(nomesPessoas, idReuniao);
+
+	                    int option = JOptionPane.showConfirmDialog(novaJanela, "Deseja adicionar mais pessoas à reunião?",
+	                            "Confirmação", JOptionPane.YES_NO_OPTION);
+
+	                    if (option == JOptionPane.NO_OPTION && peloMenosDuasPessoasAdicionadas(idReuniao)) {
+	                        novaJanela.dispose();
+	                        frame.setVisible(true);
+	                    } else {
+	                    	if (option == JOptionPane.NO_OPTION && !(peloMenosDuasPessoasAdicionadas(idReuniao))) {
+		                        JOptionPane.showMessageDialog(novaJanela, "Mínimo de duas pessoas para prosseguir.",
+		                                "Aviso", JOptionPane.WARNING_MESSAGE);
+	                    	}
 	                    }
-	                    novaJanela.dispose();
-	                    frame.setVisible(true);
 	                }
 	            } catch (Exception ex) {
 	                label.setText(ex.getMessage());
@@ -360,6 +361,12 @@ public class TelaReuniao {
 	    });
 	    btnConfirmar.setBounds(260, 50, 120, 30);
 	    novaJanela.getContentPane().add(btnConfirmar);
+	    novaJanela.setModal(true);
 	    novaJanela.setVisible(true);
+	}
+	
+	private boolean peloMenosDuasPessoasAdicionadas(int idReuniao) {
+	    Reuniao reuniao = Fachada.localizarReuniao(idReuniao);
+	    return reuniao != null && reuniao.getListaDePessoas().size() >= 2;
 	}
 }
