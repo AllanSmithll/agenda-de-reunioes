@@ -36,7 +36,7 @@ public class Cadastrar {
 
 		try {
 			System.out.println("Agendando reunioes");
-			List<String> pessoas = Arrays.asList("Allan", "Márcio", "Claudio", "Wagner");
+			List<String> pessoas = Arrays.asList("Allan", "Marcio", "Claudio", "Wagner");
 			List<String> pessoas1 = Arrays.asList("Allan", "Wagner");
 			List<String> pessoas2 = Arrays.asList("Allan", "Marcio", "Claudio");
 			List<String> pessoas3 = Arrays.asList("Marcio", "Claudio");
