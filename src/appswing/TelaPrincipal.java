@@ -1,4 +1,5 @@
 package appswing;
+
 /**********************************
  * IFPB - Curso Superior de Tec. em Sist. para Internet
  * POO
@@ -9,11 +10,14 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 
 import regras_negocio.Fachada;
@@ -25,8 +29,6 @@ public class TelaPrincipal {
 	private JMenu mnAluguel;
 	private JMenu mnConsulta;
 	private JLabel label;
-
-
 
 	/**
 	 * Launch the application.
@@ -49,7 +51,9 @@ public class TelaPrincipal {
 	 */
 	public TelaPrincipal() {
 		initialize();
-		frame.setTitle("Locadora - usuario: "+ Fachada.logado.getNome());
+		if (Fachada.logado != null) {
+			frame.setTitle("Agenda de Reuniões - usuario: " + Fachada.logado.getNome());
+		}
 		frame.setVisible(true);
 	}
 
@@ -58,19 +62,26 @@ public class TelaPrincipal {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setTitle("Locadora");
+		frame.setTitle("Agenda de Reuniões");
 		frame.setBounds(100, 100, 450, 363);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                confirmExit();
+            }
+        });
 		frame.getContentPane().setLayout(null);
 
 		label = new JLabel("");
 		label.setFont(new Font("Tahoma", Font.PLAIN, 26));
 		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setText("Inicializando...");
 		label.setBounds(0, 0, 467, 302);
-		//label.setBounds(0, 0, frame.getWidth(), frame.getHeight());
-		//ImageIcon imagem = new ImageIcon(getClass().getResource("/arquivos/imagem.png"));
-//		imagem = new ImageIcon(imagem.getImage().getScaledInstance(label.getWidth(),label.getHeight(), Image.SCALE_DEFAULT));//		label.setIcon(fotos);
+		label.setBounds(0, 0, frame.getWidth(), frame.getHeight());
+//		ImageIcon imagem = new
+//		ImageIcon(getClass().getResource("/assets/agenda_reunioes.jpg"));
+//		imagem = new ImageIcon(imagem.getImage().getScaledInstance(label.getWidth(),label.getHeight(), Image.SCALE_DEFAULT));
 //		label.setIcon(imagem);
 //		frame.getContentPane().add(label);
 //		frame.setResizable(false);
@@ -94,9 +105,7 @@ public class TelaPrincipal {
 			}
 		});
 		menuBar.add(mnPessoa);
-		
 
-		
 		mnConsulta = new JMenu("Consultas");
 		mnConsulta.addMouseListener(new MouseAdapter() {
 			@Override
@@ -106,4 +115,13 @@ public class TelaPrincipal {
 		});
 		menuBar.add(mnConsulta);
 	}
+	
+	private void confirmExit() {
+        int option = JOptionPane.showConfirmDialog(frame, "Você quer sair do Agenda de Reuniões?", "Confirmation",
+                JOptionPane.YES_NO_OPTION);
+        if (option == JOptionPane.YES_OPTION) {
+            frame.dispose();
+            System.exit(0);
+        }
+    }
 }
