@@ -47,7 +47,7 @@ public class Fachada {
 		LocalDate dataReuniao = LocalDate.parse(data, formatter);
 		LocalDate dataAtual = LocalDate.now();
 		if (dataReuniao.isBefore(dataAtual)) {
-			throw new Exception(" aqui A data da reuniao deve ser para hoje ou no futuro.");
+			throw new Exception("A data da reuniao deve ser para hoje ou no futuro.");
 		}
 		Reuniao reuniao = new Reuniao(data);
 
@@ -142,10 +142,8 @@ public class Fachada {
 	public static Pessoa localizarPessoa(String nome) {
 		return daopessoa.read(nome);
 	}
+	
 	public static void removerPessoaDaReuniao(String nome, int idReuniao) throws Exception {
-		
-		
-		
 		Reuniao reuniao = Fachada.localizarReuniao(idReuniao);
 		if(reuniao == null) {
 			throw new Exception("Reunião inexistente!");
@@ -211,25 +209,38 @@ public class Fachada {
 		DAO.commit();
 		return resultados;
 	}
-	public static void agendarReuniao(String nomeDaPessoa, int IdReuniao) throws Exception {
-		DAO.begin();
-		Pessoa pessoa = Fachada.localizarPessoa(nomeDaPessoa);
-		Reuniao reuniao = Fachada.localizarReuniao(IdReuniao);
-		
-		if(pessoa == null) {
-			DAO.rollback();
-			throw new Exception("pessoa nao encontrada!");
-		}
-		
-		if(reuniao == null) {
-			
-			throw new Exception("reuniao nao encontrada!");
-		}
-		
-		
-//		pessoa = new Pessoa(nomeDaPessoa);		
-		reuniao.adicionarPessoa(pessoa);
-
-		DAO.commit();	
+	
+	public static void adicionarPessoaNaReuniao(String nomePessoa, int idReuniao) throws Exception {
+	    DAO.begin();
+	    Reuniao reuniao = Fachada.localizarReuniao(idReuniao);
+	    if (reuniao == null) {
+	        DAO.rollback();
+	        throw new Exception("Reuniao nao encontrada!");
+	    }
+	    Pessoa pessoa = Fachada.localizarPessoa(nomePessoa);
+	    if (pessoa == null) {
+	        DAO.rollback();
+	        throw new Exception("Pessoa nao encontrada: " + nomePessoa);
+	    }
+	    reuniao.adicionarPessoa(pessoa);
+	    DAO.commit();
+	}
+	
+	public static void adicionarPessoasAReuniao(List<String> nomesPessoas, int idReuniao) throws Exception {
+	    DAO.begin();
+	    Reuniao reuniao = Fachada.localizarReuniao(idReuniao);
+	    if (reuniao == null) {
+	        DAO.rollback();
+	        throw new Exception("Reuniao nao encontrada!");
+	    }
+	    for (String nomePessoa : nomesPessoas) {
+	        Pessoa pessoa = Fachada.localizarPessoa(nomePessoa);
+	        if (pessoa == null) {
+	            DAO.rollback();
+	            throw new Exception("Pessoa nao encontrada: " + nomePessoa);
+	        }
+	        reuniao.adicionarPessoa(pessoa);
+	    }
+	    DAO.commit();
 	}
 }

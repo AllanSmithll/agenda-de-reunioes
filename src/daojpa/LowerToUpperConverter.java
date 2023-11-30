@@ -10,7 +10,7 @@ package daojpa;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 
-@Converter(autoApply=false)	//nao é automatico para todos atributos
+@Converter(autoApply=false)	//nao ï¿½ automatico para todos atributos
 public class LowerToUpperConverter 
  implements AttributeConverter<String, String> { //<origem,destino>
 	@Override
