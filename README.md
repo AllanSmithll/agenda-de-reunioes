@@ -10,8 +10,11 @@ de dados, tanto para objetos (db4o), quanto para relacional (postgreSQL) ou docu
 - Agendamento de reuniões
 - Cadastro de pessoas na reunião
 - Listagem de todas as pessoas da reunião específica
-- Edição dos dados da reunião  
+- Listagem de todas as reuniões da pessoa específica
 - Consultar dados das reuniões
+
+## Novas Funcionalidades
+- **Exclusão Automática de Reuniões:** Implementou-se um mecanismo que exclui automaticamente uma reunião se esta ficar com menos de duas pessoas.
 
 ## Contribuidores
 - Allan Amâncio - https://github.com/AllanSmithll;
