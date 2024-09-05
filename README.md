@@ -13,9 +13,17 @@ de dados, tanto para objetos (db4o), quanto para relacional (postgreSQL) ou docu
 - Listagem de todas as reuniões da pessoa específica
 - Consultar dados das reuniões
 
+## Requisitos para funcionar
+
+- Ver arquivo pom.xml, na raiz do projeto.
+
 ## Contribuidores
 - Allan Amâncio - https://github.com/AllanSmithll;
 - Márcio José - https://github.com/ImMarcio.
 
 ## Licença
 Este projeto está licenciado sob a [Licença MIT](https://opensource.org/license/mit/).
+
+## Preview
+
+![Preview da tela principal, sem imagem](image.png)
