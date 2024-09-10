@@ -8,11 +8,13 @@ package appswing;
 
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -79,16 +81,16 @@ public class TelaPrincipal {
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setBounds(0, 0, 467, 302);
 		label.setBounds(0, 0, frame.getWidth(), frame.getHeight());
-//		ImageIcon imagem = new
-//		ImageIcon(getClass().getResource("/assets/agenda_reunioes.jpg"));
-//		imagem = new ImageIcon(imagem.getImage().getScaledInstance(label.getWidth(),label.getHeight(), Image.SCALE_DEFAULT));
-//		label.setIcon(imagem);
-//		frame.getContentPane().add(label);
-//		frame.setResizable(false);
+		ImageIcon imagem = new
+		ImageIcon(getClass().getResource("/assets/agenda_reunioes.jpg"));
+		imagem = new ImageIcon(imagem.getImage().getScaledInstance(label.getWidth(),label.getHeight(), Image.SCALE_DEFAULT));
+		label.setIcon(imagem);
+		frame.getContentPane().add(label);
+		frame.setResizable(false);
 
 		JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
-		mmReuniao = new JMenu("Reuniao");
+		mmReuniao = new JMenu("Reunião");
 		mmReuniao.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
